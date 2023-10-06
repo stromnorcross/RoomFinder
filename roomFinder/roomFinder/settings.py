@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'django.contrib.sites',
-    'oauth_app',
+    'roomFinder_app',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -75,6 +75,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware"
 ]
 
 ROOT_URLCONF = "roomFinder.urls"
