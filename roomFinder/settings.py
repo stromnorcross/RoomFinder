@@ -110,12 +110,12 @@ WSGI_APPLICATION = "roomFinder.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "default": dj_database_url.config(
-        conn_max_age=600,
-        conn_health_checks=True,
-        ssl_require=True,
-    ),
-    "local": {
+    # "default": dj_database_url.config(
+    #     conn_max_age=600,
+    #     conn_health_checks=True,
+    #     ssl_require=True,
+    # ),
+    "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     }
@@ -173,3 +173,7 @@ try:
         django_heroku.settings(locals())
 except ImportError:
     found = False
+
+if 'DATABASE_URL' in os.environ:
+    import dj_database_url
+    DATABASES = {'default': dj_database_url.config()}
