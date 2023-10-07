@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'django.contrib.sites',
+    # 'django.contrib.sites',
     'roomFinder_app',
     'allauth',
     'allauth.account',
@@ -151,3 +151,11 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+#
+# try:
+#     if 'HEROKU' in os.environ:
+#         import django_heroku
+#         django_heroku.settings(locals())
+# except ImportError:
+#     found = False
