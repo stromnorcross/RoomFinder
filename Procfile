@@ -1,1 +1,1 @@
-web: gunicorn RoomFinder.wsgi
+web: gunicorn roomFinder.wsgi
