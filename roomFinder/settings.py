@@ -30,7 +30,7 @@ SECRET_KEY = "django-insecure-m#wa8k2^)fn%f%a_jzy6ifpo486v3jp#nogs@fc0asqxqk0ewz
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'room-finder1-70d4c0df9a64.herokuapp.com/']
+ALLOWED_HOSTS = ['localhost', 'room-finder1-70d4c0df9a64.herokuapp.com']
 
 
 # Application definition
