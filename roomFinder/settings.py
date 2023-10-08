@@ -29,7 +29,7 @@ SECRET_KEY = "django-insecure-m#wa8k2^)fn%f%a_jzy6ifpo486v3jp#nogs@fc0asqxqk0ewz
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['room-finder1-70d4c0df9a64.herokuapp.com']
+ALLOWED_HOSTS = ['room-finder1-70d4c0df9a64.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # 'django.contrib.sites',
+    'django.contrib.sites',
     'roomFinder_app',
     'allauth',
     'allauth.account',
@@ -66,7 +66,7 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-SITE_ID = 3
+SITE_ID = 2
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
