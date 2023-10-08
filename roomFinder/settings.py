@@ -11,11 +11,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-import secrets
-import os
-
-import dj_database_url
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,7 +25,7 @@ SECRET_KEY = "django-insecure-m#wa8k2^)fn%f%a_jzy6ifpo486v3jp#nogs@fc0asqxqk0ewz
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'room-finder1-70d4c0df9a64.herokuapp.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -74,7 +69,6 @@ LOGOUT_REDIRECT_URL = '/'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -110,11 +104,6 @@ WSGI_APPLICATION = "roomFinder.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    # "default": dj_database_url.config(
-    #     conn_max_age=600,
-    #     conn_health_checks=True,
-    #     ssl_require=True,
-    # ),
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
@@ -162,18 +151,3 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-STATIC_ROOT = BASE_DIR / "staticfiles"
-
-# Activate Django-Heroku.
-# Use this code to avoid the psycopg2 / django-heroku error!  
-# Do NOT import django-heroku above!
-try:
-    if 'HEROKU' in os.environ:
-        import django_heroku
-        django_heroku.settings(locals())
-except ImportError:
-    found = False
-
-if 'DATABASE_URL' in os.environ:
-    import dj_database_url
-    DATABASES = {'default': dj_database_url.config()}
