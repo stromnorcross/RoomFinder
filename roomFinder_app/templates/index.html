@@ -1,23 +1,7 @@
-<!--{% load socialaccount %}-->
-<!--<html>-->
-<!--<body>-->
-<!--<h1>roomFinder</h1>-->
-<!--{% if user.is_staff %}-->
-<!--    <p>You are an admin! You are logged in as {{ user.username }}. Your email is {{ user.email }}.</p>-->
-<!--    <a href="{% url 'account_logout' %}">Log Out</a>-->
-<!--{% elif user.is_authenticated %}-->
-<!--  <p>Welcome, You are logged in as {{ user.username }}. Your email is {{ user.email }}.</p>-->
-<!--    <a href="{% url 'account_logout' %}">Log Out</a>-->
-<!--{% else %}-->
-<!--    <a href="{% provider_login_url 'google' %}">Login With Google</a>-->
-<!--{% endif %}-->
-
-
-<!--</body>-->
-<!--</html>-->
+{% load socialaccount %}
 <html>
-  <head>
-    <title>Simple Map</title>
+<head>
+  <title>Simple Map</title>
     <link type="text/css" href="style.css" />
 
     <script async
@@ -29,9 +13,19 @@
         console.log('Maps JavaScript API loaded.');
       }
     </script>
+</head>
+<body>
+<h1>roomFinder</h1>
+{% if user.is_staff %}
+    <p>You are an admin! You are logged in as {{ user.username }}. Your email is {{ user.email }}.</p>
+    <a href="{% url 'account_logout' %}">Log Out</a>
+{% elif user.is_authenticated %}
+  <p>Welcome, You are logged in as {{ user.username }}. Your email is {{ user.email }}.</p>
+    <a href="{% url 'account_logout' %}">Log Out</a>
+{% else %}
+    <a href="{% provider_login_url 'google' %}">Login With Google</a>
+{% endif %}
+<gmp-map center="38.0336, -78.5080" zoom="16" map-id="DEMO_MAP_ID"></gmp-map>
 
-  </head>
-  <body>
-    <gmp-map center="37.4220656,-122.0840897" zoom="10" map-id="DEMO_MAP_ID"></gmp-map>
-  </body>
+</body>
 </html>
