@@ -10,6 +10,15 @@ class Room(models.Model):
         return self.room_name
 
 
+class User(models.Model):
+    name = models.CharField(max_length=50)
+    email = models.CharField(max_length=50)
+    user_type = models.TextChoices("user_type", "USER ADMIN")
+
+    def __str__(self):
+        return self.name + " - " + self.email
+
+
 class Reservation(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -21,10 +30,4 @@ class Reservation(models.Model):
         return self.user + " - " + self.room
 
 
-class User(models.Model):
-    name = models.CharField(max_length=50)
-    email = models.CharField(max_length=50)
-    user_type = models.TextChoices("user_type", "USER ADMIN")
 
-    def __str__(self):
-        return self.name + " - " + self.email
