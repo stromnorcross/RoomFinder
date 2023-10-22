@@ -24,6 +24,7 @@ class User(models.Model):
 
 
 class Reservation(models.Model):
+    title = models.CharField(max_length=100)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     start_time = models.DateTimeField()
@@ -35,7 +36,7 @@ class Reservation(models.Model):
         return now - datetime.timedelta(days=1) <= self.created_at <= now
 
     def __str__(self):
-        return self.user + " - " + self.room
+        return self.title + ": " + self.user + " - " + self.room
 
 
 

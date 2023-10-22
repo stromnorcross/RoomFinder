@@ -21,6 +21,12 @@ class RoomDetailView(generic.DetailView):
     
     def get_queryset(self):
         return Room.objects.all()
+    
+class ReservationCreate(generic.ListView):
+    template_name = 'create_reservation.html'
+
+    def get_queryset(self):
+        return Reservation.objects.all()
 
 """
 TODO
@@ -34,11 +40,12 @@ class ReservationDetailView(generic.DetailView):
 
 """
 TODO
-class ReservationDetailView(generic.DetailView):
-    model = Reservation
-    template_name = "reservation_detail.html"
+class UserDetailView(generic.DetailView):
+    model = User
+    template_name = "user_detail.html"
 
-    def get_queryset(self):
-        return Reservation.object.all()
+    show past bookings...
 """
+
+
 
