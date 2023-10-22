@@ -1,15 +1,32 @@
 {% load socialaccount %}
+{% load static %}
 <html>
+<head>
+    <link rel="stylesheet" href="{% static 'roomFinder_app/style.css' %}" />
+
+    <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3KKFuePsefgmgXPsYzqD2SFydD_rlUIM&callback=initMap&libraries=maps,marker&v=beta">
+    </script>
+
+    <script>
+      function initMap() {
+        console.log('Maps JavaScript API loaded.');
+      }
+    </script>
+</head>
 <body>
-<h1>roomFinder</h1>
-{% if user.is_staff %}
+  <h1>roomFinder</h1>
+  {% if user.is_staff %}
     <p>You are an admin! You are logged in as {{ user.username }}. Your email is {{ user.email }}.</p>
     <a href="{% url 'account_logout' %}">Log Out</a>
-{% elif user.is_authenticated %}
-  <p>Welcome, You are logged in as {{ user.username }}. Your email is {{ user.email }}.</p>
+    <gmp-map center="38.0336, -78.5080" zoom="16" map-id="CHARLOTTESVILLE"></gmp-map>
+  {% elif user.is_authenticated %}
+    <p>Welcome, You are logged in as {{ user.username }}. Your email is {{ user.email }}.</p>
     <a href="{% url 'account_logout' %}">Log Out</a>
-{% else %}
+    <gmp-map center="38.0336, -78.5080" zoom="16" map-id="CHARLOTTESVILLE"></gmp-map>
+  {% else %}
     <a href="{% provider_login_url 'google' %}">Login With Google</a>
-{% endif %}
+  {% endif %}
+
 </body>
 </html>
