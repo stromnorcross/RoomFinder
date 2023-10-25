@@ -3,8 +3,8 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views import generic
-
-from .models import Room, User, Reservation
+from django.contrib.auth.models import User
+from .models import Room, Reservation
 
 
 

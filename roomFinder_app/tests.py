@@ -2,7 +2,8 @@ import datetime
 
 from django.test import TestCase
 from django.utils import timezone
-from .models import Room, User, Reservation
+from django.contrib.auth.models import User
+from .models import Room, Reservation
 
 
 def create_room(name, location, cap):
@@ -12,11 +13,11 @@ def create_room(name, location, cap):
     return Room.objects.create(room_name=name, room_location=location, capacity=cap)
 
 
-def create_user(name, email):
+def create_user(username, email, password):
     """
     Create a user with given 'name', 'email', and 'type'
     """
-    return User.objects.create(name=name, email=email)
+    return User.objects.create_user(username=username, email=email, password=password)
 
 
 class ReservationModelTests(TestCase):
@@ -27,7 +28,7 @@ class ReservationModelTests(TestCase):
         """
         title = "Studying for Midterm"
         room = create_room("Rice 130", "Rice Hall", 100)
-        user = create_user("Bob", "email@email.com")
+        user = create_user("Bob", "email@email.com", "Bobpassword")
 
         time = timezone.now() + datetime.timedelta(days=30)
         start = timezone.now()
@@ -43,7 +44,7 @@ class ReservationModelTests(TestCase):
         """
         title = "Studying for Midterm"
         room = create_room("Rice 130", "Rice Hall", 100)
-        user = create_user("Bob", "email@email.com")
+        user = create_user("Bob", "email@email.com", "Bobpassword")
 
         start = timezone.now()
         end = timezone.now() + datetime.timedelta(hours=2)
@@ -59,7 +60,7 @@ class ReservationModelTests(TestCase):
         """
         title = "Studying for Midterm"
         room = create_room("Rice 130", "Rice Hall", 100)
-        user = create_user("Bob", "email@email.com")
+        user = create_user("Bob", "email@email.com", "Bobpassword")
 
         start = timezone.now()
         end = timezone.now() + datetime.timedelta(hours=2)
