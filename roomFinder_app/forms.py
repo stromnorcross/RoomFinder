@@ -1,6 +1,6 @@
 from django.forms import ModelForm, inlineformset_factory
-
-from .models import Reservation, Room, User
+from django.contrib.auth.models import User
+from .models import Reservation, Room
 
 
 class RoomForm(ModelForm):
