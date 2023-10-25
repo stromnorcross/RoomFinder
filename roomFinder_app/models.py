@@ -2,6 +2,7 @@ import datetime
 
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -14,13 +15,13 @@ class Room(models.Model):
         return self.room_name
 
 
-class User(models.Model):
-    name = models.CharField(max_length=50)
-    email = models.CharField(max_length=50)
-    user_type = models.TextChoices("user_type", "USER ADMIN")
-
-    def __str__(self):
-        return self.name + " - " + self.email
+# class User(models.Model):
+#     name = models.CharField(max_length=50)
+#     email = models.CharField(max_length=50)
+#     user_type = models.TextChoices("user_type", "USER ADMIN")
+#
+#     def __str__(self):
+#         return self.name + " - " + self.email
 
 
 class Reservation(models.Model):
