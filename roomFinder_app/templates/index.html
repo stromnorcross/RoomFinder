@@ -24,6 +24,18 @@
     <p>Welcome, You are logged in as {{ user.username }}. Your email is {{ user.email }}.</p>
     <a href="{% url 'account_logout' %}">Log Out</a>
     <gmp-map center="38.0336, -78.5080" zoom="16" map-id="aca56ed0ca45d249"></gmp-map>
+    <gmp-map center="38.0336, -78.5080" zoom="16" map-id="CHARLOTTESVILLE"></gmp-map>
+        <a href="{% url 'roomFinder_app:create_reservation'%}">Book my study room!</a>
+    <h3>Rooms</h3>
+        {% if room_list %}
+            <ul>
+               {% for room in room_list %}
+                    <li><a href="{% url 'roomFinder_app:room_detail' room.id %}">{{ room.room_name }}</a></li>
+               {% endfor %}
+            </ul>
+        {% else %}
+            <p>No rooms available</p>
+        {% endif %}
   {% else %}
     <a href="{% provider_login_url 'google' %}">Login With Google</a>
   {% endif %}
