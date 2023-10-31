@@ -28,6 +28,42 @@ class ReservationCreate(generic.ListView):
     def get_queryset(self):
         return Reservation.objects.all()
 
+    # @login_required(login_url='/user')
+    # def make_reservation(self,request):
+    #     if request.method == "POST":
+    #         # change room_id for POST to be expected request
+    #         room_id = request.POST['room_id']
+    #         room = Rooms.objects.all().get(id=room_id)
+    #         for reservation in Reservation.objects.all().filter(room=room):
+    #             # only allow booking if the requested start time is after the reservation end time
+    #             # or requested end time is before reservation start time, need to check hotel reservation logic for if-elif
+    #             if reservation.start_time < request.POST['start_time'] and reservation.end_time < request.POST['end_time']:
+    #                 # pass is a keyword that does nothing, kinda like break but instead it just lets the loop keep running to check
+    #                 # the requested start and end times with other reservations
+    #                 pass
+    #             elif reservation.start_time > request.POST['start_time'] and reservation.end_time > request.POST['end_time']:
+    #                 pass
+    #             else:
+    #                 messages.warning(request, "Invalid Booking Time")
+    #                 return redirect("homepage")
+    #
+    #         current_user = request.user
+    #         booking_id = str(room_id) + str(datetime.datetime.now())
+    #         reservation = Reservation()
+    #         room_object = Rooms.objects.all().get(id=room_id)
+    #         user_object = User.objects.all().get(username=current_user)
+    #         reservation.user = user_object
+    #         reservation.room = room_object
+    #         reservation.start_time = request.POST['start_time']
+    #         reservation.end_time = request.POST['end_time']
+    #
+    #         reservation.save()
+    #
+    #         return redirect("homepage")
+    #     else:
+    #         return HttpResponse('Access Denied')
+
+
 """
 TODO
 class ReservationDetailView(generic.DetailView):

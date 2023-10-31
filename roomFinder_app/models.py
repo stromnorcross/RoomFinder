@@ -3,6 +3,7 @@ import datetime
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import ArrayField
 
 
 # Create your models here.
@@ -30,6 +31,7 @@ class Reservation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
+    day = models.PositiveIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def was_created_recently(self):
