@@ -7,8 +7,9 @@ let map, infoWindow;
 async function initMap() {
     const { Map } = await google.maps.importLibrary("maps");
     map = new Map(document.getElementById("map"), {
-    center: { lat: "38.0336", lng: "-78.5080" },
-    zoom: 10,
+    mapId: "aca56ed0ca45d249",
+    center: { lat: 38.0336, lng: -78.5080 },
+    zoom: 20,
   });
 
   window.onload = getCurrentLocation;
