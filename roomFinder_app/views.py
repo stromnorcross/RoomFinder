@@ -62,6 +62,7 @@ class CreateResView(CreateView):
             user_object = User.objects.all().get(username=current_user)
             reservation.user = user_object
             reservation.room = room_object
+            reservation.title = request.POST['title']
             reservation.start_time = request.POST['start_time']
             reservation.end_time = request.POST['end_time']
 
@@ -72,15 +73,19 @@ class CreateResView(CreateView):
             return HttpResponse('Access Denied')
 
 
-"""
-TODO
 class ReservationDetailView(generic.DetailView):
     model = Reservation
     template_name = "reservation_detail.html"
 
     def get_queryset(self):
         return Reservation.object.all()
-"""
+    
+class ReservationListView(generic.ListView):
+    model = Reservation
+    template_name = "reservation_list.html"
+
+    def get_queryset(self):
+        return Reservation.object.all()
 
 """
 TODO
