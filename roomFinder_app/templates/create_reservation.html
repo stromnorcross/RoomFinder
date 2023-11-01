@@ -5,15 +5,15 @@
     <title>Title</title>
 </head>
 <body>
-<form action="{% url 'roomFinder_app:create_reservation' %}" method="post">
+<form action="{% url 'roomFinder_app:create_reservation' %}" method="POST">
     {% csrf_token %}
     <fieldset>
-        <legend><h1>{{ question.question_text }}</h1></legend>
-            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-            {% for choice in question.choice_set.all %}
-                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-                <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
-            {% endfor %}
+        <label for="room_name">Room Name: </label>
+        <input type="text" id="room_name" name="room_name">
+        <label for="start_time">Start Time: </label>
+        <input type="text" id="start_time" name="start_time">
+        <label for="end_time">End Time: </label>
+        <input type="text" id="end_time" name="end_time">
     </fieldset>
     <input type="submit" class="btn btn-outline-primary mt-3" value="Vote">
 </form>
