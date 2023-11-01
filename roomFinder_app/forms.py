@@ -11,13 +11,13 @@ class RoomForm(ModelForm):
 class UserForm(ModelForm):
     class Meta:
         model = User
-        fields = ['name', 'email', ]
+        fields = ['username', 'email', ]
 
 
 class ReservationForm(ModelForm):
     class Meta:
         model = Reservation
-        fields = ['title', 'room', 'user']
+        fields = ['title', 'room', 'user', 'start_time', 'end_time', 'day']
 
 
 """
