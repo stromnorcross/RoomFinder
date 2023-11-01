@@ -9,5 +9,5 @@ urlpatterns = [
     path("", views.IndexView.as_view(), name="index"),
     path("map/", TemplateView.as_view(template_name="map.html"), name="map"),
     path("<int:pk>/", views.RoomDetailView.as_view(), name="room_detail"),
-    path("create/", views.make_reservation, name="create_reservation"),
+    path("create/", TemplateView.as_view(template_name="create_reservation.html"), name="create_reservation"),
 ]
