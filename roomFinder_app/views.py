@@ -59,7 +59,9 @@ class CreateResView(CreateView):
             #booking_id = str(room_id) + str(datetime.datetime.now())
             reservation = Reservation()
             room_object = Rooms.objects.all().get(room_name=room_name)
+            print(room_object)
             user_object = User.objects.all().get(username=current_user)
+            print(user_object)
             reservation.user = user_object
             reservation.room = room_object
             reservation.title = request.POST['title']
@@ -67,6 +69,7 @@ class CreateResView(CreateView):
             reservation.end_time = request.POST['end_time']
 
             reservation.save()
+            print(reservation)
 
             return redirect("homepage")
         else:
