@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views import generic
@@ -29,7 +29,7 @@ class RoomDetailView(generic.DetailView):
 #         return Reservation.objects.all()
 # 
 #     #@login_required(login_url='/user')
-def make_reservation(self,request):
+def make_reservation(request):
     if request.method == "POST":
         # change room_id for POST to be expected request
         room_name = request.POST['room_name']
