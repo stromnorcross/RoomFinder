@@ -36,6 +36,7 @@
         {% else %}
             <p>No rooms available</p>
         {% endif %}
+    <a href="{% url 'roomFinder_app:reservation_list'%}">View Reservations</a>
   {% else %}
     <a href="{% provider_login_url 'google' %}">Login With Google</a>
   {% endif %}

@@ -14,16 +14,7 @@ class Room(models.Model):
 
     def __str__(self):
         return self.room_name
-
-
-# class User(models.Model):
-#     name = models.CharField(max_length=50)
-#     email = models.CharField(max_length=50)
-#     user_type = models.TextChoices("user_type", "USER ADMIN")
-#
-#     def __str__(self):
-#         return self.name + " - " + self.email
-
+    
 
 class Reservation(models.Model):
     title = models.CharField(max_length=100)
@@ -31,7 +22,7 @@ class Reservation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
-    day = models.PositiveIntegerField()
+    day = models.PositiveIntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     approved = models.BooleanField(default=False, editable=False)
 

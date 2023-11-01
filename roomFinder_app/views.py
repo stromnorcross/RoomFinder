@@ -81,11 +81,12 @@ class ReservationDetailView(generic.DetailView):
         return Reservation.object.all()
     
 class ReservationListView(generic.ListView):
-    model = Reservation
+    #model = Reservation
     template_name = "reservation_list.html"
+    context_object_name = "reservation_list"
 
     def get_queryset(self):
-        return Reservation.object.all()
+        return Reservation.objects.all()
 
 """
 TODO
