@@ -67,7 +67,7 @@ def make_reservation(request):
         reservation.save()
         print(reservation)
 
-        #return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
     else:
         return HttpResponse('Access Denied')
 
