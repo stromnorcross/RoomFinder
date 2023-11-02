@@ -31,16 +31,16 @@ class Reservation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
-    day = models.PositiveIntegerField()
+    day = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
-    approved = models.BooleanField(default=False, editable=False)
+    approved = models.BooleanField('Approved', default=False)
 
     def was_created_recently(self):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.created_at <= now
 
     def __str__(self):
-        return self.title + ": " + self.user + " - " + self.room
+        return self.title + ": " + str(self.user) + " - " + str(self.room)
 
 
 
