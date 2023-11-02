@@ -33,47 +33,48 @@ class RoomDetailView(generic.DetailView):
 #     #@login_required(login_url='/user')
 
 
+def make_reservation(request):
+    if request.method == "POST":
+        # change room_id for POST to be expected request
+        room_name = request.POST['room_name']
+        room = Room.objects.all().get(room_name=room_name)
+        # for reservation in Reservation.objects.all().filter(room=room):
+        # # only allow booking if the requested start time is after the reservation end time
+        # # or requested end time is before reservation start time, need to check hotel reservation logic for if-elif
+        #     if str(reservation.start_time) > request.POST['start_time'] and str(reservation.start_time) > request.POST['end_time']:
+        #     # pass is a keyword that does nothing, kinda like break but instead it just lets the loop keep running to check
+        #     # the requested start and end times with other reservations
+        #         pass
+        #     elif str(reservation.end_time) < request.POST['start_time'] and str(reservation.end_time) < request.POST['end_time']:
+        #         pass
+        #     else:
+        #         #messages.warning(request, "Invalid Booking Time")
+        #         #return redirect("homepage")
+
+        current_user = request.user
+        #booking_id = str(room_id) + str(datetime.datetime.now())
+        reservation = Reservation()
+        room_object = Room.objects.all().get(room_name=room_name)
+        print(room_object)
+        user_object = User.objects.all().get(username=current_user)
+        print(user_object)
+        reservation.user = user_object
+        reservation.room = room_object
+        reservation.title = request.POST['title']
+        reservation.start_time = request.POST['start_time']
+        reservation.end_time = request.POST['end_time']
+
+        reservation.save()
+        print(reservation)
+
+        #return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
+    else:
+        return HttpResponse('Access Denied')
+
+
 class CreateResView(CreateView):
     form_class = ReservationForm
     template_name = "create_reservation.html"
-    
-    def make_reservation(self, request):
-        if request.method == "POST":
-            # change room_id for POST to be expected request
-            room_name = request.POST['room_name']
-            room = Room.objects.all().get(room_name=room_name)
-            for reservation in Reservation.objects.all().filter(room=room):
-            # only allow booking if the requested start time is after the reservation end time
-            # or requested end time is before reservation start time, need to check hotel reservation logic for if-elif
-                if str(reservation.start_time) > request.POST['start_time'] and str(reservation.start_time) > request.POST['end_time']:
-                # pass is a keyword that does nothing, kinda like break but instead it just lets the loop keep running to check
-                # the requested start and end times with other reservations
-                    pass
-                elif str(reservation.end_time) < request.POST['start_time'] and str(reservation.end_time) < request.POST['end_time']:
-                    pass
-                else:
-                    messages.warning(request, "Invalid Booking Time")
-                    return redirect("homepage")
-
-            current_user = request.user
-            #booking_id = str(room_id) + str(datetime.datetime.now())
-            reservation = Reservation()
-            room_object = Rooms.objects.all().get(room_name=room_name)
-            print(room_object)
-            user_object = User.objects.all().get(username=current_user)
-            print(user_object)
-            reservation.user = user_object
-            reservation.room = room_object
-            reservation.title = request.POST['title']
-            reservation.start_time = request.POST['start_time']
-            reservation.end_time = request.POST['end_time']
-
-            reservation.save()
-            print(reservation)
-
-            return redirect("homepage")
-        else:
-            return HttpResponse('Access Denied')
 
 
 class ReservationDetailView(generic.DetailView):
@@ -81,7 +82,7 @@ class ReservationDetailView(generic.DetailView):
     template_name = "reservation_detail.html"
 
     def get_queryset(self):
-        return Reservation.object.all()
+        return Reservation.objects.all()
     
 class ReservationListView(generic.ListView):
     #model = Reservation

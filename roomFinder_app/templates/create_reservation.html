@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<form action="{% url 'roomFinder_app:create_reservation' %}" method="post">
+<form action="{% url 'roomFinder_app:make_res' %}" method="post">
     {% csrf_token %}
     <fieldset>
         <label for="title">Title: </label>

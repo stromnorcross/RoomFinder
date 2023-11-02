@@ -31,7 +31,7 @@ class Reservation(models.Model):
         return now - datetime.timedelta(days=1) <= self.created_at <= now
 
     def __str__(self):
-        return self.title + ": " + self.user + " - " + self.room
+        return self.title + ": " + str(self.user) + " - " + str(self.room)
 
 
 
