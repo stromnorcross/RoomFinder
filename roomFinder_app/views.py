@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
@@ -70,6 +70,12 @@ def make_reservation(request):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
     else:
         return HttpResponse('Access Denied')
+
+
+def admin_delete_reservation(request, pk):
+    reservation = get_object_or_404(Reservation, pk=pk)
+    reservation.delete()
+    return redirect("roomFinder_app:reservation_list")
 
 
 class CreateResView(CreateView):

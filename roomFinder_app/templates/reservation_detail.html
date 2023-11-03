@@ -1,3 +1,4 @@
+{% load auth_extras %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,5 +10,10 @@
     <p>Day: {{ reservation.day }}</p>
     <p>Start Time: {{ reservation.start_time }}</p>
     <p>End Time: {{ reservation.end_time }}</p>
+    {% if request.user|has_group:"admin" %}
+        <a href="{% url 'roomFinder_app:delete_reservation' reservation.id %}">Delete</a>
+    {% endif %}
+
+</form>
 </body>
 </html>
