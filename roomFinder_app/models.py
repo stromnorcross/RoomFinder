@@ -3,6 +3,7 @@ import datetime
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.contrib.auth.models import Permission
 #from django.contrib.postgres.fields import ArrayField
 
 
@@ -24,7 +25,7 @@ class Reservation(models.Model):
     end_time = models.DateTimeField()
     day = models.PositiveIntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
-    approved = models.BooleanField(default=False, editable=False)
+    approved = models.BooleanField(default=True, editable=False)
 
     def was_created_recently(self):
         now = timezone.now()
