@@ -92,6 +92,15 @@ class ReservationListView(generic.ListView):
     def get_queryset(self):
         return Reservation.objects.all()
 
+
+"""
+TODO
+
+Inside the reservation detail view, there is a button to disapprove a reservation
+def disapprove_res(request):
+
+
+"""
 """
 TODO
 class UserDetailView(generic.DetailView):

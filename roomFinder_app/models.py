@@ -24,7 +24,7 @@ class Reservation(models.Model):
     end_time = models.DateTimeField()
     day = models.PositiveIntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
-    approved = models.BooleanField(default=False, editable=False)
+    approved = models.BooleanField(default=True, editable=False)
 
     def was_created_recently(self):
         now = timezone.now()
