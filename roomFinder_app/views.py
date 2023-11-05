@@ -89,14 +89,20 @@ class ReservationDetailView(generic.DetailView):
 
     def get_queryset(self):
         return Reservation.objects.all()
-    
+
+
 class ReservationListView(generic.ListView):
     #model = Reservation
     template_name = "reservation_list.html"
     context_object_name = "reservation_list"
 
     def get_queryset(self):
-        return Reservation.objects.all()
+        user = self.request.user
+        group_name = "admin"
+        if user.groups.filter(name=group_name).exists():
+            return Reservation.objects.all()
+        else:
+            return Reservation.objects.filter(user=user)
 
 
 """
