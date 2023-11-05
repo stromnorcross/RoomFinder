@@ -96,7 +96,7 @@ class ReservationListView(generic.ListView):
     context_object_name = "reservation_list"
 
     def get_queryset(self):
-        return Reservation.objects.all()
+        return Reservation.objects.filter(user=self.request.user)
 
 
 """
