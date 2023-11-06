@@ -108,7 +108,7 @@ class IndexView(generic.ListView):
     context_object_name = "room_list"
     flag = 0
     if flag==0:
-        #import_data()
+        import_data()
         flag=1
 
     def get_queryset(self):
