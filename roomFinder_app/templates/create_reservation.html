@@ -13,11 +13,19 @@
         <label for="room_name">Room Name: </label>
         <input type="text" id="room_name" name="room_name">
         <label for="start_time">Start Time: </label>
-        <input type="text" id="start_time" name="start_time">
+        <input type="text" id="start_time" name="start_time" placeholder="YYYY-MM-DD HH:MM">
         <label for="end_time">End Time: </label>
-        <input type="text" id="end_time" name="end_time">
+        <input type="text" id="end_time" name="end_time" placeholder="YYYY-MM-DD HH:MM">
         <label for="day">Day: </label>
-        <input type="text" id="day" name="day">
+        <select id="day" name="day">
+            <option value="1">Monday</option>
+            <option value="2">Tuesday</option>
+            <option value="3">Wednesday</option>
+            <option value="4">Thursday</option>
+            <option value="5">Friday</option>
+            <option value="6">Saturday</option>
+            <option value="7">Sunday</option>
+        </select>
     </fieldset>
     <input type="submit" class="btn btn-outline-primary mt-3" value="Submit">
     <a href="{% url 'roomFinder_app:index' %}">Return home</a>
