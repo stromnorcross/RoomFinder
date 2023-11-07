@@ -34,7 +34,7 @@ def import_data():
             reservation = Reservation(title='Class',room=room,user=user,start_time=datetime.strptime(str(row['Start_time']), '%H.%M'),
                                       end_time=datetime.strptime(row['End_time'], '%H:%M:%S'),day=row['Days'])
             reservation.save()
-    except NameError:
+    except IntegrityError:
         print("Create a Dummy User")
 
 class IndexView(generic.ListView):
