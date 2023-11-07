@@ -19,8 +19,8 @@ import re
 def import_data():
     df = pd.read_csv("roomFinder_app/class_res.csv")
     for index, row in df.iterrows():
-        if not Room.objects.filter(room_id=row['Room'], building=row['Building']).exists():
-            room = Room(room_id=row['Room'],building=row['Building'])
+        if not Room.objects.filter(room_name=row['Room'], building=row['Building']).exists():
+            room = Room(room_name=row['Room'],building=row['Building'])
             room.save()
         reservation = Reservation(title='Class',room=room,user=User,start_time=row['Start_time'],
                                   end_time=row['End_time'],day=row['Days'])
