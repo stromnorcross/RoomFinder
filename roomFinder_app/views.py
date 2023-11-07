@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
+from django.db import IntegrityError
 from django.views import generic
 from django.contrib.auth.models import User
 from .models import Room, Reservation
