@@ -23,8 +23,6 @@ class Reservation(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
     day = models.CharField(max_length=15)
-    # created_at = models.DateTimeField(auto_now_add=True)
-    approved = models.BooleanField(default=False)
 
     def was_created_recently(self):
         now = timezone.now()
