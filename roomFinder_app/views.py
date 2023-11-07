@@ -2,17 +2,47 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
+from django.db import IntegrityError
 from django.views import generic
 from django.contrib.auth.models import User
 from .models import Room, Reservation
 from .forms import ReservationForm
 from django.views.generic import CreateView
+from django.core.exceptions import ObjectDoesNotExist
+# from separate import room_generate
+import datetime
+import json
+import pandas as pd
+import requests
+from datetime import timedelta,datetime
+import re
 
+def dummy_user():
+    try:
+        return User.objects.get(username='class time')
+    except ObjectDoesNotExist:
+        print("Create a Dummy User")
 
+def import_data():
+    try:
+        user = dummy_user()
+        df = pd.read_csv("roomFinder_app/class_res.csv")
+        for index, row in df.iterrows():
+            if not Room.objects.filter(room_name=row['Room'], building=row['Building']).exists():
+                room = Room(room_name=row['Room'],building=row['Building'])
+                room.save()
+            room = Room.objects.get(room_name=row['Room'],building=row['Building'])
+            reservation = Reservation(title='Class',room=room,user=user,start_time=datetime.strptime(str(row['Start_time']), '%H.%M'),
+                                      end_time=datetime.strptime(row['End_time'], '%H:%M:%S'),day=row['Days'])
+            reservation.save()
+    except IntegrityError:
+        print("Create a Dummy User")
 
 class IndexView(generic.ListView):
     template_name = "index.html"
     context_object_name = "room_list"
+    if Reservation.objects.count() < 6756:
+        import_data()
 
     def get_queryset(self):
         return Room.objects.all()
@@ -31,7 +61,6 @@ class RoomDetailView(generic.DetailView):
 #         return Reservation.objects.all()
 # 
 #     #@login_required(login_url='/user')
-
 
 def make_reservation(request):
     if request.method == "POST":

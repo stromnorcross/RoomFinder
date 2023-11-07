@@ -6,11 +6,11 @@ from django.contrib.auth.models import User
 from .models import Room, Reservation
 
 
-def create_room(name, location, cap):
+def create_room(name, building):
     """
-    Create a room with the given 'name', 'location', and 'cap'
+    Create a room with the given 'name', 'building'
     """
-    return Room.objects.create(room_name=name, room_location=location, capacity=cap)
+    return Room.objects.create(room_name=name, building=building)
 
 
 def create_user(username, email, password):
@@ -27,14 +27,15 @@ class ReservationModelTests(TestCase):
         is in the future.
         """
         title = "Studying for Midterm"
-        room = create_room("Rice 130", "Rice Hall", 100)
+        room = create_room("130", "Rice Hall")
         user = create_user("Bob", "email@email.com", "Bobpassword")
 
         time = timezone.now() + datetime.timedelta(days=30)
         start = timezone.now()
         end = timezone.now() + datetime.timedelta(hours=2)
+        day = 1
 
-        future_res = Reservation(title=title, room=room, user=user, start_time=start, end_time=end, created_at=time)
+        future_res = Reservation(title=title, room=room, user=user, start_time=start, end_time=end, day=day, created_at=time)
         self.assertIs(future_res.was_created_recently(), False)
     
     def test_was_created_recently_with_old_reservation(self):
@@ -43,14 +44,14 @@ class ReservationModelTests(TestCase):
         is older than 1 day.
         """
         title = "Studying for Midterm"
-        room = create_room("Rice 130", "Rice Hall", 100)
+        room = create_room("Rice 130", "Rice Hall")
         user = create_user("Bob", "email@email.com", "Bobpassword")
 
         start = timezone.now()
         end = timezone.now() + datetime.timedelta(hours=2)
-        
+        day = 1
         time = timezone.now() - datetime.timedelta(days=1, seconds=1)
-        old_res = Reservation(title=title, room=room, user=user, start_time=start, end_time=end, created_at=time)
+        old_res = Reservation(title=title, room=room, user=user, start_time=start, end_time=end, day=day, created_at=time)
         self.assertIs(old_res.was_created_recently(), False)
 
     def test_was_created_recently_with_recent_reservation(self):
@@ -59,12 +60,12 @@ class ReservationModelTests(TestCase):
         is within the last day.
         """
         title = "Studying for Midterm"
-        room = create_room("Rice 130", "Rice Hall", 100)
+        room = create_room("Rice 130", "Rice Hall")
         user = create_user("Bob", "email@email.com", "Bobpassword")
 
         start = timezone.now()
         end = timezone.now() + datetime.timedelta(hours=2)
-
+        day = 1
         time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
-        recent_res = Reservation(title=title, room=room, user=user, start_time=start, end_time=end, created_at=time)
+        recent_res = Reservation(title=title, room=room, user=user, start_time=start, end_time=end, day=day, created_at=time)
         self.assertIs(recent_res.was_created_recently(), True)
