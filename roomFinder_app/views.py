@@ -23,16 +23,19 @@ def dummy_user():
         print("Create a Dummy User")
 
 def import_data():
-    user = dummy_user()
-    df = pd.read_csv("roomFinder_app/class_res.csv")
-    for index, row in df.iterrows():
-        if not Room.objects.filter(room_name=row['Room'], building=row['Building']).exists():
-            room = Room(room_name=row['Room'],building=row['Building'])
-            room.save()
-        room = Room.objects.get(room_name=row['Room'],building=row['Building'])
-        reservation = Reservation(title='Class',room=room,user=user,start_time=datetime.strptime(str(row['Start_time']), '%H.%M'),
-                                  end_time=datetime.strptime(row['End_time'], '%H:%M:%S'),day=row['Days'])
-        reservation.save()
+    try:
+        user = dummy_user()
+        df = pd.read_csv("roomFinder_app/class_res.csv")
+        for index, row in df.iterrows():
+            if not Room.objects.filter(room_name=row['Room'], building=row['Building']).exists():
+                room = Room(room_name=row['Room'],building=row['Building'])
+                room.save()
+            room = Room.objects.get(room_name=row['Room'],building=row['Building'])
+            reservation = Reservation(title='Class',room=room,user=user,start_time=datetime.strptime(str(row['Start_time']), '%H.%M'),
+                                      end_time=datetime.strptime(row['End_time'], '%H:%M:%S'),day=row['Days'])
+            reservation.save()
+    except NameError:
+        print("Create a Dummy User")
 
 class IndexView(generic.ListView):
     template_name = "index.html"
