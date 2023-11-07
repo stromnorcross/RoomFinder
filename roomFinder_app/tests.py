@@ -44,7 +44,7 @@ class ReservationModelTests(TestCase):
         is older than 1 day.
         """
         title = "Studying for Midterm"
-        room = create_room("Rice 130", "Rice Hall", 100)
+        room = create_room("Rice 130", "Rice Hall")
         user = create_user("Bob", "email@email.com", "Bobpassword")
 
         start = timezone.now()
@@ -60,7 +60,7 @@ class ReservationModelTests(TestCase):
         is within the last day.
         """
         title = "Studying for Midterm"
-        room = create_room("Rice 130", "Rice Hall", 100)
+        room = create_room("Rice 130", "Rice Hall")
         user = create_user("Bob", "email@email.com", "Bobpassword")
 
         start = timezone.now()
