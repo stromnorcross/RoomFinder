@@ -9,7 +9,7 @@ from django.contrib.auth.models import Permission
 
 # Create your models here.
 class Room(models.Model):
-    room_id = models.PositiveIntegerField(default=0)
+    room_name = models.CharField(max_length=100)
     building = models.CharField(max_length=100)
 
     def __str__(self):
