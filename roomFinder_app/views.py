@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from .models import Room, Reservation
 from .forms import ReservationForm
 from django.views.generic import CreateView
+from django.core.exceptions import ObjectDoesNotExist
 # from separate import room_generate
 import datetime
 import json
@@ -16,7 +17,10 @@ from datetime import timedelta,datetime
 import re
 
 def dummy_user():
-    return User.objects.get(username='class time')
+    try:
+        return User.objects.get(username='class time')
+    except ObjectDoesNotExist:
+        print("Create a Dummy User")
 
 def import_data():
     user = dummy_user()
