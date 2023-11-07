@@ -15,12 +15,13 @@ import requests
 from datetime import timedelta,datetime
 import re
 
+
 def import_data():
-    df = pd.read_csv("roomFinder_app/class_res.csv")
+    df = room_generate()
     for index, row in df.iterrows():
-        # if not Room.objects.filter(room_id=row['Room'], building=row['Building']).exists():
-        room = Room(room_name=str(row['Room']),building=str(row['Building']))
-        room.save()
+        if not Room.objects.filter(room_id=row['Room'], building=row['Building']).exists():
+            room = Room(room_id=row['Room'],building=row['Building'])
+            room.save()
         reservation = Reservation(title='Class',room=room,user=User,start_time=row['Start_time'],
                                   end_time=row['End_time'],day=row['Days'])
         reservation.save()
@@ -28,10 +29,11 @@ def import_data():
 class IndexView(generic.ListView):
     template_name = "index.html"
     context_object_name = "room_list"
-    # if Room.objects.exists():
-    #     pass
-    # else:
-    import_data()
+    flag = 0
+    if flag==0:
+        import_data()
+        flag=1
+
     def get_queryset(self):
         return Room.objects.all()
     
