@@ -13,7 +13,7 @@ class Room(models.Model):
     building = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.building + " " + str(self.room_id)
+        return self.building + " " + str(self.room_name)
     
 
 class Reservation(models.Model):

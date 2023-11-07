@@ -15,23 +15,25 @@ import requests
 from datetime import timedelta,datetime
 import re
 
+def dummy_user():
+    return User.objects.get(username='class time')
 
 def import_data():
+    user = dummy_user()
     df = pd.read_csv("roomFinder_app/class_res.csv")
     for index, row in df.iterrows():
         if not Room.objects.filter(room_name=row['Room'], building=row['Building']).exists():
             room = Room(room_name=row['Room'],building=row['Building'])
             room.save()
-        reservation = Reservation(title='Class',room=room,user=User,start_time=row['Start_time'],
-                                  end_time=row['End_time'],day=row['Days'])
+        room = Room.objects.get(room_name=row['Room'],building=row['Building'])
+        reservation = Reservation(title='Class',room=room,user=user,start_time=datetime.strptime(str(row['Start_time']), '%H.%M'),
+                                  end_time=datetime.strptime(row['End_time'], '%H:%M:%S'),day=row['Days'])
         reservation.save()
 
 class IndexView(generic.ListView):
     template_name = "index.html"
     context_object_name = "room_list"
-    if Room.objects.exists():
-        pass
-    else:
+    if Reservation.objects.count() < 6756:
         import_data()
 
     def get_queryset(self):
@@ -56,7 +58,7 @@ def make_reservation(request):
     if request.method == "POST":
         # change room_id for POST to be expected request
         room_name = request.POST['room_name']
-        room = Room.objects.all().get(room_id=room_name)
+        room = Room.objects.all().get(room_name=room_name)
         # for reservation in Reservation.objects.all().filter(room=room):
         # # only allow booking if the requested start time is after the reservation end time
         # # or requested end time is before reservation start time, need to check hotel reservation logic for if-elif
@@ -73,7 +75,7 @@ def make_reservation(request):
         current_user = request.user
         #booking_id = str(room_id) + str(datetime.datetime.now())
         reservation = Reservation()
-        room_object = Room.objects.all().get(room_id=room_name)
+        room_object = Room.objects.all().get(room_name=room_name)
         print(room_object)
         user_object = User.objects.all().get(username=current_user)
         print(user_object)
