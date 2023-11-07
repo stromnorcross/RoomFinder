@@ -17,7 +17,7 @@ import re
 
 
 def import_data():
-    df = room_generate()
+    df = pd.read_csv("roomFinder_app/class_res.csv")
     for index, row in df.iterrows():
         if not Room.objects.filter(room_id=row['Room'], building=row['Building']).exists():
             room = Room(room_id=row['Room'],building=row['Building'])
@@ -29,10 +29,10 @@ def import_data():
 class IndexView(generic.ListView):
     template_name = "index.html"
     context_object_name = "room_list"
-    flag = 0
-    if flag==0:
+    if Room.objects.exists():
+        pass
+    else:
         import_data()
-        flag=1
 
     def get_queryset(self):
         return Room.objects.all()
