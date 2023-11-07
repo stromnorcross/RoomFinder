@@ -35,7 +35,7 @@ class ReservationModelTests(TestCase):
         end = timezone.now() + datetime.timedelta(hours=2)
         day = 1
 
-        future_res = Reservation(title=title, room=room, user=user, start_time=start, end_time=end, day=day)
+        future_res = Reservation(title=title, room=room, user=user, start_time=start, end_time=end, day=day, created_at=time)
         self.assertIs(future_res.was_created_recently(), False)
     
     def test_was_created_recently_with_old_reservation(self):
@@ -51,7 +51,7 @@ class ReservationModelTests(TestCase):
         end = timezone.now() + datetime.timedelta(hours=2)
         day = 1
         time = timezone.now() - datetime.timedelta(days=1, seconds=1)
-        old_res = Reservation(title=title, room=room, user=user, start_time=start, end_time=end, day=day)
+        old_res = Reservation(title=title, room=room, user=user, start_time=start, end_time=end, day=day, created_at=time)
         self.assertIs(old_res.was_created_recently(), False)
 
     def test_was_created_recently_with_recent_reservation(self):
@@ -67,5 +67,5 @@ class ReservationModelTests(TestCase):
         end = timezone.now() + datetime.timedelta(hours=2)
         day = 1
         time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
-        recent_res = Reservation(title=title, room=room, user=user, start_time=start, end_time=end, day=day)
+        recent_res = Reservation(title=title, room=room, user=user, start_time=start, end_time=end, day=day, created_at=time)
         self.assertIs(recent_res.was_created_recently(), True)
