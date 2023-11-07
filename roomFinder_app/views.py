@@ -9,14 +9,14 @@ from .forms import ReservationForm
 from django.views.generic import CreateView
 
 
-
 class IndexView(generic.ListView):
     template_name = "index.html"
     context_object_name = "room_list"
 
     def get_queryset(self):
         return Room.objects.all()
-    
+
+
 class RoomDetailView(generic.DetailView):
     model = Room
     template_name = "room_detail.html"
