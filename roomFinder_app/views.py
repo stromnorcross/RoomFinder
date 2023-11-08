@@ -9,7 +9,6 @@ from .models import Room, Reservation
 from .forms import ReservationForm
 from django.views.generic import CreateView
 from django.core.exceptions import ObjectDoesNotExist
-# from separate import room_generate
 import datetime
 import json
 import pandas as pd
@@ -46,14 +45,14 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         return Room.objects.all()
-    
+
 class RoomDetailView(generic.DetailView):
     model = Room
     template_name = "room_detail.html"
-    
+
     def get_queryset(self):
         return Room.objects.all()
-    
+
 # class ReservationCreate(generic.ListView):
 #     template_name = 'create_reservation.html'
 # 
@@ -66,37 +65,37 @@ def make_reservation(request):
     if request.method == "POST":
         # change room_id for POST to be expected request
         room_name = request.POST['room_name']
+        # make change in create_reservation.html to separate room_name and building inputs
+        building = request.POST['building']
         room = Room.objects.all().get(room_name=room_name)
-        # for reservation in Reservation.objects.all().filter(room=room):
-        # # only allow booking if the requested start time is after the reservation end time
-        # # or requested end time is before reservation start time, need to check hotel reservation logic for if-elif
-        #     if str(reservation.start_time) > request.POST['start_time'] and str(reservation.start_time) > request.POST['end_time']:
-        #     # pass is a keyword that does nothing, kinda like break but instead it just lets the loop keep running to check
-        #     # the requested start and end times with other reservations
-        #         pass
-        #     elif str(reservation.end_time) < request.POST['start_time'] and str(reservation.end_time) < request.POST['end_time']:
-        #         pass
-        #     else:
-        #         #messages.warning(request, "Invalid Booking Time")
-        #         #return redirect("homepage")
+        for reservation in Reservation.objects.all().filter(room=room, building=building):
+            if str(reservation.start_time) > request.POST['start_time'] and str(reservation.start_time) > request.POST['end_time'] and request.POST['start_time']<request.POST['end_time']:
+                pass
+            elif str(reservation.end_time) < request.POST['start_time'] and str(reservation.end_time) < request.POST['end_time'] and request.POST['start_time']<request.POST['end_time']:
+                pass
+            else:
+                messages.warning(request, "Invalid Booking Time")
+
 
         current_user = request.user
         #booking_id = str(room_id) + str(datetime.datetime.now())
         reservation = Reservation()
-        room_object = Room.objects.all().get(room_name=room_name)
-        print(room_object)
+        room_object = Room.objects.all().filter(building=building).get(room_name=room_name)
+        # print(room_object)
         user_object = User.objects.all().get(username=current_user)
-        print(user_object)
+        # print(user_object)
         reservation.user = user_object
         reservation.room = room_object
         reservation.title = request.POST['title']
         reservation.start_time = request.POST['start_time']
         reservation.end_time = request.POST['end_time']
-
+        reservation.day = request.POST['day']
         reservation.save()
         print(reservation)
 
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
+        reservation_pk = reservation.pk
+        reservation_detail_url = reverse('roomFinder_app:reservation_detail', args=[reservation_pk])
+        return HttpResponseRedirect(reservation_detail_url)
     else:
         return HttpResponse('Access Denied')
 
