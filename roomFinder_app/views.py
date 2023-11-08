@@ -65,23 +65,20 @@ class RoomDetailView(generic.DetailView):
 def make_reservation(request):
     if request.method == "POST":
         # change room_id for POST to be expected request
+        building = request.POST['building']
         room_name = request.POST['room_name']
-        room = Room.objects.all().get(room_name=room_name)
-        # for reservation in Reservation.objects.all().filter(room=room):
-        # # only allow booking if the requested start time is after the reservation end time
-        # # or requested end time is before reservation start time, need to check hotel reservation logic for if-elif
-        #     if str(reservation.start_time) > request.POST['start_time'] and str(reservation.start_time) > request.POST['end_time']:
-        #     # pass is a keyword that does nothing, kinda like break but instead it just lets the loop keep running to check
-        #     # the requested start and end times with other reservations
-        #         pass
-        #     elif str(reservation.end_time) < request.POST['start_time'] and str(reservation.end_time) < request.POST['end_time']:
-        #         pass
-        #     else:
-        #         #messages.warning(request, "Invalid Booking Time")
-        #         #return redirect("homepage")
+        room = Room.objects.all().filter(building=building).get(room_name=room_name)
+        for reservation in Reservation.objects.all().filter(room=room):
+            if str(reservation.start_time) > request.POST['start_time'] and str(reservation.start_time) > request.POST['end_time'] and request.POST['start_time']<request.POST['end_time']:
+                pass
+            elif str(reservation.end_time) < request.POST['start_time'] and str(reservation.end_time) < request.POST['end_time']  and request.POST['start_time']<request.POST['end_time']:
+                pass
+            else:
+                messages.warning(request, "Invalid Booking Time: A Reservation Exists For This Time")
+                # placeholder for now need to decide what to do if invalig, redirect to page or keep on page and have them re-enter
+                # return redirect("create_reservation")
 
         current_user = request.user
-        #booking_id = str(room_id) + str(datetime.datetime.now())
         reservation = Reservation()
         room_object = Room.objects.all().get(room_name=room_name)
         print(room_object)
@@ -92,11 +89,13 @@ def make_reservation(request):
         reservation.title = request.POST['title']
         reservation.start_time = request.POST['start_time']
         reservation.end_time = request.POST['end_time']
+        reservation.day = request.POST['day']
 
         reservation.save()
         print(reservation)
-
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
+        reservation_pk = reservation.pk
+        reservation_detail_url = reverse('roomFinder_app:reservation_detail', args=[reservation_pk])
+        return HttpResponseRedirect(reservation_detail_url)
     else:
         return HttpResponse('Access Denied')
 
