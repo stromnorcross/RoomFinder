@@ -40,12 +40,19 @@ def import_data():
 
 class IndexView(generic.ListView):
     template_name = "index.html"
-    context_object_name = "room_list"
+    context_object_name = "building_list"
     if Reservation.objects.count() < 6756:
         import_data()
 
     def get_queryset(self):
-        return Room.objects.all()
+        seen = set()
+        uniqueBuildings = []
+        for room in Room.objects.all().order_by('building'):
+            if room.building not in seen:
+                seen.add(room.building)
+                uniqueBuildings.append(room.building)
+        return uniqueBuildings
+        
     
 class RoomDetailView(generic.DetailView):
     model = Room

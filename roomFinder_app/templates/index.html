@@ -42,10 +42,10 @@
     ({key: "AIzaSyD3KKFuePsefgmgXPsYzqD2SFydD_rlUIM", v: "weekly"});</script>
         <a href="{% url 'roomFinder_app:create_reservation'%}">Book my study room!</a>
     <h3>Rooms</h3>
-        {% if room_list %}
+        {% if building_list %}
             <ul>
-               {% for room in room_list %}
-                    <li><a href="{% url 'roomFinder_app:room_detail' room.id %}">{{ room.room_name }}</a></li>
+               {% for building in building_list %}
+                    <h3>{{building}}</h3>
                {% endfor %}
             </ul>
         {% else %}
