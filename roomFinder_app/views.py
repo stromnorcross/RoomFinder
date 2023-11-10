@@ -38,6 +38,10 @@ def import_data():
     except IntegrityError:
         print("Create a Dummy User")
 
+def room_list(request, building_value):
+    objects = Room.objects.filter(building=building_value)
+    return render(request, 'room_list.html', {'objects': objects, 'building_value': building_value})
+
 class IndexView(generic.ListView):
     template_name = "index.html"
     context_object_name = "building_list"
@@ -134,9 +138,14 @@ class ReservationListView(generic.ListView):
 
     def get_queryset(self):
         user = self.request.user
+        class_user = User.objects.get(username='class_time')
         group_name = "admin"
         if user.groups.filter(name=group_name).exists():
-            return Reservation.objects.all()
+            reservations = []
+            for reservation in Reservation.objects.all():
+                if reservation.user != class_user:
+                    reservations.append(reservation)
+            return reservations
         else:
             return Reservation.objects.filter(user=user)
 

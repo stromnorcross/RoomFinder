@@ -44,8 +44,8 @@
     <h3>Rooms</h3>
         {% if building_list %}
             <ul>
-               {% for building in building_list %}
-                    <h3>{{building}}</h3>
+               {% for building_value in building_list %}
+                  <li><a href="{% url 'roomFinder_app:room_list' building_value %}">{{ building_value }}</a></li>
                {% endfor %}
             </ul>
         {% else %}
