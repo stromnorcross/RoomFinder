@@ -7,6 +7,11 @@
 <body>
 <form action="{% url 'roomFinder_app:make_res' %}" method="post">
     {% csrf_token %}
+    {% for msg in messages %}
+        {% if msg.tags == 'warning' %}
+            {{ msg }}
+        {% endif %}
+    {% endfor %}
     <fieldset>
         <label for="title">Title: </label>
         <input type="text" id="title" name="title">

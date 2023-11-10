@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.db import IntegrityError
 from django.views import generic
 from django.contrib.auth.models import User
+from django.contrib import messages
 from .models import Room, Reservation
 from .forms import ReservationForm
 from django.views.generic import CreateView
@@ -68,19 +69,25 @@ def make_reservation(request):
         building = request.POST['building']
         room_name = request.POST['room_name']
         room = Room.objects.all().filter(building=building).get(room_name=room_name)
+        input_start_time = datetime.time(datetime.strptime(request.POST['start_time'], '%H:%M'))
+        input_end_time = datetime.time(datetime.strptime(request.POST['end_time'], '%H:%M'))
         for reservation in Reservation.objects.all().filter(room=room):
-            if str(reservation.start_time) > request.POST['start_time'] and str(reservation.start_time) > request.POST['end_time'] and request.POST['start_time']<request.POST['end_time']:
-                pass
-            elif str(reservation.end_time) < request.POST['start_time'] and str(reservation.end_time) < request.POST['end_time']  and request.POST['start_time']<request.POST['end_time']:
+            if not(reservation.day == request.POST['day']):
                 pass
             else:
-                messages.warning(request, "Invalid Booking Time: A Reservation Exists For This Time")
-                # placeholder for now need to decide what to do if invalig, redirect to page or keep on page and have them re-enter
-                # return redirect("create_reservation")
+                if reservation.start_time > input_start_time and reservation.start_time > input_end_time > input_start_time:
+                    pass
+                elif reservation.end_time < input_start_time < input_end_time and reservation.end_time < input_end_time:
+                    pass
+                else:
+                    messages.warning(request, "Invalid Booking Time: A Reservation Exists For This Time")
+                    return HttpResponseRedirect(reverse('roomFinder_app:create_reservation'))
+                    # placeholder for now need to decide what to do if invalig, redirect to page or keep on page and have them re-enter
+                    # return redirect("create_reservation")
 
         current_user = request.user
         reservation = Reservation()
-        room_object = Room.objects.all().get(room_name=room_name)
+        room_object = Room.objects.all().get(room_name=room_name, building=building)
         print(room_object)
         user_object = User.objects.all().get(username=current_user)
         print(user_object)
@@ -92,7 +99,7 @@ def make_reservation(request):
         reservation.day = request.POST['day']
 
         reservation.save()
-        print(reservation)
+        #print(reservation)
         reservation_pk = reservation.pk
         reservation_detail_url = reverse('roomFinder_app:reservation_detail', args=[reservation_pk])
         return HttpResponseRedirect(reservation_detail_url)
