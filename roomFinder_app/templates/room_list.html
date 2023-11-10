@@ -5,6 +5,7 @@
 <h2>{{ building_value }}</h2>
 <ul>
     {% for obj in objects %}
-        <li>{{ obj.room_name }}</li>
+        <li><a href="{% url 'roomFinder_app:room_detail' obj.room_name %}">{{ obj.room_name }}</a></li>
+        <!-- <li>{{ obj.room_name }}</li> -->
     {% endfor %}
 </ul>
