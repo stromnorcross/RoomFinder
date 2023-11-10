@@ -68,16 +68,16 @@ def make_reservation(request):
         # change room_id for POST to be expected request
         building = request.POST['building']
         room_name = request.POST['room_name']
-        room = Room.objects.all().filter(building=building).get(room_name=room_name)
+        room = Room.objects.all().get(room_name=room_name, building=building)
         input_start_time = datetime.time(datetime.strptime(request.POST['start_time'], '%H:%M'))
         input_end_time = datetime.time(datetime.strptime(request.POST['end_time'], '%H:%M'))
         for reservation in Reservation.objects.all().filter(room=room):
             if not(reservation.day == request.POST['day']):
                 pass
             else:
-                if reservation.start_time > input_start_time and reservation.start_time > input_end_time > input_start_time:
+                if reservation.start_time > input_start_time and reservation.start_time >= input_end_time > input_start_time:
                     pass
-                elif reservation.end_time < input_start_time < input_end_time and reservation.end_time < input_end_time:
+                elif reservation.end_time <= input_start_time < input_end_time and reservation.end_time < input_end_time:
                     pass
                 else:
                     messages.warning(request, "Invalid Booking Time: A Reservation Exists For This Time")
