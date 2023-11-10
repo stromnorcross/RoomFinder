@@ -138,7 +138,7 @@ class ReservationListView(generic.ListView):
 
     def get_queryset(self):
         user = self.request.user
-        class_user = User.objects.get(username='class_time')
+        class_user = User.objects.get(username='class time')
         group_name = "admin"
         if user.groups.filter(name=group_name).exists():
             reservations = []
