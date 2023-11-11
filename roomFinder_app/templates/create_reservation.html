@@ -5,13 +5,18 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <h3>Book a Room</h3>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
 </head>
 <body style="margin-left:200px">
 <form action="{% url 'roomFinder_app:make_res' %}" method="post">
     {% csrf_token %}
     {% for msg in messages %}
         {% if msg.tags == 'warning' %}
-            {{ msg }}
+            <div class="alert alert-warning alert-dismissile" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ msg }}</div>
         {% endif %}
     {% endfor %}
     <fieldset>
