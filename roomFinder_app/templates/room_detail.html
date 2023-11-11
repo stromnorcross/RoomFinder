@@ -1,9 +1,10 @@
+{% include 'sidebar.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
 </head>
-<body>
-    <h1>Room: {{ room.room_name }}</h1>
+<body style="margin-left:200px">
+    <h2>Room: {{ room.room_name }}</h2>
     <p>Location: {{ room.room_location }}</p>
     <p>Capacity: {{ room.capacity }}</p>
     <a href="{% url 'roomFinder_app:index'%}">Back to Home</a>
