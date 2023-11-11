@@ -23,6 +23,14 @@ class RoomDetailView(generic.DetailView):
     
     def get_queryset(self):
         return Room.objects.all()
+
+
+class RoomListView(generic.ListView):
+    template_name = "room_list.html"
+    context_object_name = "room_list"
+
+    def get_queryset(self):
+        return Room.objects.all()
     
 # class ReservationCreate(generic.ListView):
 #     template_name = 'create_reservation.html'

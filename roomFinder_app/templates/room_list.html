@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="content">
+ <h3>Rooms</h3>
+        {% if room_list %}
+          <ul>
+            {% for room in room_list %}
+              <li><a href="{% url 'roomFinder_app:room_detail' room.id %}">{{ room.room_name }}</a></li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p>No rooms available</p>
+        {% endif %}
+</div>
+</body>
+</html>
