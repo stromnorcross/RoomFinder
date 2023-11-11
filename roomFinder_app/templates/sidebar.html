@@ -35,7 +35,7 @@
         <h3><u>User</u></h3>
         <a href="{% url 'roomFinder_app:create_reservation'%}">Book a Room</a>
         <a href="{% url 'roomFinder_app:reservation_list'%}">Past Reservations</a>
-        <a href="#">Invitations</a>
+        <a href="{% url 'roomFinder_app:room_list'%}">Rooms</a>
         <a class="btn btn-secondary" href="{% url 'account_logout' %}"  role="button">Sign out</a>
       </div>
       <!-- Admin Content -->
@@ -49,7 +49,7 @@
         <a href="{% url 'roomFinder_app:create_reservation'%}">Book a Room</a>
         <a href="{% url 'roomFinder_app:reservation_list'%}">Current Reservations</a>
         <a href="{% url 'roomFinder_app:reservation_list'%}">Past Reservations</a>
-        <a href="#">Invitations</a>
+        <a href="{% url 'roomFinder_app:room_list'%}">Rooms</a>
         <a href="#">Settings</a>
         <a class="btn btn-secondary" href="{% url 'account_logout' %}"  role="button">Sign out</a>
       </div>
