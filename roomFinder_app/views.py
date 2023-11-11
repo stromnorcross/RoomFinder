@@ -85,7 +85,9 @@ class RoomListView(generic.ListView):
 def make_reservation(request):
     if request.method == "POST":
         try:
-            # change room_id for POST to be expected request
+            if request.POST['title'] == "":
+                messages.warning(request, "Please enter a title.")
+                return HttpResponseRedirect(reverse('roomFinder_app:create_reservation'))
             building = request.POST['building']
             room_name = request.POST['room_name']
             room = Room.objects.all().get(room_name=room_name, building=building)
@@ -102,8 +104,6 @@ def make_reservation(request):
                     else:
                         messages.warning(request, "Invalid Booking Time: A Reservation Exists For This Time")
                         return HttpResponseRedirect(reverse('roomFinder_app:create_reservation'))
-                        # placeholder for now need to decide what to do if invalig, redirect to page or keep on page and have them re-enter
-                        # return redirect("create_reservation")
 
             current_user = request.user
             reservation = Reservation()
@@ -117,12 +117,13 @@ def make_reservation(request):
             reservation.start_time = request.POST['start_time']
             reservation.end_time = request.POST['end_time']
             reservation.day = request.POST['day']
-
             reservation.save()
-            #print(reservation)
             reservation_pk = reservation.pk
             reservation_detail_url = reverse('roomFinder_app:reservation_detail', args=[reservation_pk])
             return HttpResponseRedirect(reservation_detail_url)
+        except ValueError:
+            messages.warning(request, "Please enter a time")
+            return HttpResponseRedirect(reverse('roomFinder_app:create_reservation'))
         except Room.DoesNotExist:
             messages.warning(request, "This room does not exist. Please pick a room that exists")
             return HttpResponseRedirect(reverse('roomFinder_app:create_reservation'))
