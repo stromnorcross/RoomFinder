@@ -1,7 +1,9 @@
+{% include 'sidebar.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
 </head>
+<body style="margin-left:200px">
 <h2>{{ building_value }}</h2>
     <ul>
         {% for obj in objects %}
@@ -9,3 +11,4 @@
             <!-- <li>{{ obj.room_name }}</li> -->
         {% endfor %}
     </ul>
+</body>

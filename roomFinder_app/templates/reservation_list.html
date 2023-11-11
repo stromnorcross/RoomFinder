@@ -1,3 +1,4 @@
+{% extends 'sidebar.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +6,9 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Your Reservations</h1>
+{% block admin-content %}
+<div class="content">
+<h2>Your Reservations</h2>
 {% if reservation_list %}
     <ul>
        {% for reservation in reservation_list %}
@@ -15,6 +18,22 @@
 {% else %}
     <p>No reservations made</p>
 {% endif %}
-<a href="{% url 'roomFinder_app:index'%}">Back to Home</a>
+</div>
+{% endblock admin-content %}
+
+{% block user-content %}
+<div class="content">
+<h2>Your Reservations</h2>
+{% if reservation_list %}
+    <ul>
+       {% for reservation in reservation_list %}
+            <li><a href="{% url 'roomFinder_app:reservation_detail' reservation.id %}">{{ reservation.title }}</a></li>
+       {% endfor %}
+    </ul>
+{% else %}
+    <p>No reservations made</p>
+{% endif %}
+    </div>
+{% endblock user-content %}
 </body>
 </html>

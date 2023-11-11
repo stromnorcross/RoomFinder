@@ -1,10 +1,12 @@
+{% include 'sidebar.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <h3>Book a Room</h3>
 </head>
-<body>
+<body style="margin-left:200px">
 <form action="{% url 'roomFinder_app:make_res' %}" method="post">
     {% csrf_token %}
     {% for msg in messages %}
@@ -19,6 +21,8 @@
         <input type="text" id="building" name="building">
         <label for="room_name">Room Name: </label>
         <input type="text" id="room_name" name="room_name">
+    </fieldset>
+    <fieldset style="margin-top:50px">
         <label for="start_time">Start Time: </label>
         <input type="text" id="start_time" name="start_time" placeholder="HH.MM">
         <label for="end_time">End Time: </label>
@@ -35,7 +39,6 @@
         </select>
     </fieldset>
     <input type="submit" class="btn btn-outline-primary mt-3" value="Submit">
-    <a href="{% url 'roomFinder_app:index' %}">Return home</a>
 </form>
 </body>
 </html>

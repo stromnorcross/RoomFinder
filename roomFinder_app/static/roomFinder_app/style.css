@@ -12,6 +12,76 @@
 html,
 body {
   height: 100%;
-  margin: 0;
-  padding: 0;
+  margin-left:0px;
+  padding: 0px 10px;
+}
+
+.content {
+    margin-left:210px;
+}
+
+.sidenav {
+    height:100%;
+    width:210px;
+    position: fixed;
+    z-index:1;
+    top:0;
+    left:0;
+    background-color:#111;
+    overflow-x: hidden;
+    padding-top:20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.sidenav a {
+    padding:6px 8px 6px 16px;
+    text-decoration: none;
+    font-size:20px;
+    color: #818181;
+    display:block;
+}
+.sidenav a:hover {
+    color:#f1f1f1;
+}
+
+.sidenav .btn {
+    padding:6px 8px 6px 8px;
+    margin: auto 10px 12px 10px;
+    font-size:20px;
+    color:#f1f1f1;
+}
+
+.sidenav .title {
+    color: #f1f1f1;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.sidenav h3 {
+    padding:30px 8px 6px 16px;
+    text-decoration: none;
+    font-size:25px;
+    color: #818181;
+    display:block;
+}
+
+h1 {
+    padding:25px 8px 6px 8px;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+h1.logged-out {
+    margin-right: 130px;
+}
+
+a.btn.logged-out {
+    margin-right: 130px;
 }
