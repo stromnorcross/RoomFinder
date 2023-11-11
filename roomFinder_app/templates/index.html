@@ -44,6 +44,8 @@
         <div class="row">
           <div class="col">
             <h3>Buildings</h3>
+            <div class="card" style="height:400px">
+              <div class="overflow-auto">
             {% if building_list %}
                 <ul>
                    {% for building_value in building_list %}
@@ -53,6 +55,8 @@
             {% else %}
                 <p>No rooms available</p>
             {% endif %}
+              </div>
+            </div>
           </div>
           <div class="col">
             <h2>Map</h2>

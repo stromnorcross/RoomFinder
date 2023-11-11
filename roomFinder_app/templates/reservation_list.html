@@ -8,32 +8,34 @@
 <body>
 {% block admin-content %}
 <div class="content">
-<h2>Your Reservations</h2>
-{% if reservation_list %}
-    <ul>
-       {% for reservation in reservation_list %}
-            <li><a href="{% url 'roomFinder_app:reservation_detail' reservation.id %}">{{ reservation.title }}</a></li>
-       {% endfor %}
-    </ul>
-{% else %}
-    <p>No reservations made</p>
-{% endif %}
+    <h1>Your Reservations</h1>
+    <hr>
+    {% if reservation_list %}
+        <ul>
+           {% for reservation in reservation_list %}
+                <li><a href="{% url 'roomFinder_app:reservation_detail' reservation.id %}">{{ reservation.title }}</a></li>
+           {% endfor %}
+        </ul>
+    {% else %}
+        <p>No reservations made</p>
+    {% endif %}
 </div>
 {% endblock admin-content %}
 
 {% block user-content %}
 <div class="content">
-<h2>Your Reservations</h2>
-{% if reservation_list %}
-    <ul>
-       {% for reservation in reservation_list %}
-            <li><a href="{% url 'roomFinder_app:reservation_detail' reservation.id %}">{{ reservation.title }}</a></li>
-       {% endfor %}
-    </ul>
-{% else %}
-    <p>No reservations made</p>
-{% endif %}
-    </div>
+    <h1>Your Reservations</h1>
+    <hr>
+    {% if reservation_list %}
+        <ul>
+           {% for reservation in reservation_list %}
+                <li><a href="{% url 'roomFinder_app:reservation_detail' reservation.id %}">{{ reservation.title }}</a></li>
+           {% endfor %}
+        </ul>
+    {% else %}
+        <p>No reservations made</p>
+    {% endif %}
+</div>
 {% endblock user-content %}
 </body>
 </html>

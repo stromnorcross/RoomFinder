@@ -10,6 +10,7 @@
 <body>
     <div class="content">
         <h1>Book a Room</h1>
+        <hr>
         <form action="{% url 'roomFinder_app:make_res' %}" method="post">
             {% csrf_token %}
             {% for msg in messages %}
