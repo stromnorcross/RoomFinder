@@ -72,11 +72,6 @@
         </div>
       </div>
     {% endblock user-content %}
-    {% else %}
-      <div class="login-container">
-        <h1 class="logged-out">roomFinder</h1>
-        <a class="logged-out btn btn-primary" href="{% provider_login_url 'google' %}">Login With Google</a>
-      </div>
     {% endif %}
 
     <!-- Optional Bootstrap JavaScript -->

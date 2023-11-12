@@ -8,12 +8,26 @@
 <body>
 {% block admin-content %}
 <div class="content">
-    <h1>Your Reservations</h1>
+    <h1>Reservations</h1>
     <hr>
+    <input type=button class="back btn btn-outline-primary" value="Back" onClick="javascript:history.go(-1);">
+    <h2><u>All Reservations</u></h2>
     {% if reservation_list %}
         <ul>
            {% for reservation in reservation_list %}
                 <li><a href="{% url 'roomFinder_app:reservation_detail' reservation.id %}">{{ reservation.title }}</a></li>
+           {% endfor %}
+        </ul>
+    {% else %}
+        <p>No reservations made</p>
+    {% endif %}
+    <h2><u>Your Reservations</u></h2>
+    {% if reservation_list %}
+        <ul>
+           {% for reservation in reservation_list %}
+                {% if reservation.user == request.user %}
+                    <li><a href="{% url 'roomFinder_app:reservation_detail' reservation.id %}">{{ reservation.title }}</a></li>
+                {% endif %}
            {% endfor %}
         </ul>
     {% else %}
@@ -26,6 +40,7 @@
 <div class="content">
     <h1>Your Reservations</h1>
     <hr>
+    <input type=button class="back btn btn-outline-primary" value="Back" onClick="javascript:history.go(-1);">
     {% if reservation_list %}
         <ul>
            {% for reservation in reservation_list %}
