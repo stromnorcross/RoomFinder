@@ -4,17 +4,20 @@
 <html lang="en">
 <head>
 </head>
-<body style="margin-left:200px">
-    <h2>Title: {{ reservation.title }}</h2>
-    <p>User: {{ reservation.user }}</p>
-    <p>Room: {{ reservation.room }}</p>
-    <p>Day: {{ reservation.day }}</p>
-    <p>Start Time: {{ reservation.start_time }}</p>
-    <p>End Time: {{ reservation.end_time }}</p>
-    {% if request.user|has_group:"admin" %}
-        <a href="{% url 'roomFinder_app:delete_reservation' reservation.id %}">Delete</a>
-    {% endif %}
-    <a href="{% url 'roomFinder_app:reservation_list'%}">Back to Reservations</a>
+<body>
+    <div class="content">
+        <h1>Title: {{ reservation.title }}</h1>
+        <hr>
+        <p>Room: {{ reservation.room }}</p>
+        <p>Day: {{ reservation.day }}</p>
+        <p>Start Time: {{ reservation.start_time }}</p>
+        <p>End Time: {{ reservation.end_time }}</p>
+        {% if request.user|has_group:"admin" %}
+            <p>User: {{ reservation.user }}</p>
+            <a href="{% url 'roomFinder_app:delete_reservation' reservation.id %}" class="btn btn-outline-primary">Delete</a>
+        {% endif %}
+        <a href="{% url 'roomFinder_app:reservation_list'%}" class="btn btn-outline-primary">Back to Reservations</a>
+    </div>
 </form>
 </body>
 </html>

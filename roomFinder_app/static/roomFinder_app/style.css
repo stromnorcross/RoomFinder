@@ -78,10 +78,10 @@ h1 {
     height: 100vh;
 }
 
-h1.logged-out {
-    margin-right: 130px;
+.back {
+    margin-bottom: 20px;
 }
 
-a.btn.logged-out {
-    margin-right: 130px;
+.back {
+    margin-bottom: 20px;
 }
