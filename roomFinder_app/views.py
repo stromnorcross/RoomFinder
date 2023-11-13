@@ -40,7 +40,7 @@ def import_data():
         print("Create a Dummy User")
 
 def room_list(request, building_value):
-    objects = Room.objects.filter(building=building_value, approved=True)
+    objects = Room.objects.all().filter(building=building_value, approved=True)
     return render(request, 'room_list.html', {'objects': objects, 'building_value': building_value})
 
 class IndexView(generic.ListView):
@@ -67,11 +67,15 @@ class UnapprovedRoomsList(generic.ListView):
         return Room.objects.filter(approved=False)
 
 def approve_room(request, pk):
-    obj = get_object_or_404(Room, pk=pk)
-    obj.approved = True;
-    obj.save()
+    room = get_object_or_404(Room, pk=pk)
+    room.approved = True;
+    room.save()
     return redirect("roomFinder_app:unapproved_rooms")
 
+def delete_room(request, pk):
+    room = get_object_or_404(Room, pk=pk)
+    room.delete()
+    return redirect("roomFinder_app:unapproved_rooms")
 
 class RoomDetailView(generic.DetailView):
     model = Room

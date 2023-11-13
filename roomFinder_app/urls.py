@@ -18,5 +18,6 @@ urlpatterns = [
     path("add_new_room/add_room", views.add_room, name="add_room"),
     path("approve_rooms/", views.UnapprovedRoomsList.as_view(), name="unapproved_rooms"),
     path("room_list/<int:pk>/details/approve", views.approve_room, name="approve_room"),
-    path('reservation/delete/<int:pk>/', views.admin_delete_reservation, name='delete_reservation'),
+    path("room_list/<int:pk>/details/delete", views.delete_room, name="delete_room"),
+    path('reservation/<int:pk>/delete/', views.admin_delete_reservation, name='delete_reservation'),
 ]
