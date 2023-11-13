@@ -6,7 +6,7 @@ from django.db import IntegrityError
 from django.views import generic
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import Room, Reservation
+from .models import Room, Reservation, Message, RoomRequest
 from .forms import ReservationForm, RoomForm
 from django.views.generic import CreateView
 from django.core.exceptions import ObjectDoesNotExist
@@ -74,8 +74,35 @@ def approve_room(request, pk):
 
 def delete_room(request, pk):
     room = get_object_or_404(Room, pk=pk)
+    room_req = RoomRequest.objects.filter(room=room).get()
+    to_user = room_req.user
+    message = Message()
+    message.user = to_user
+    message.message = str(room) + " does not exist in real life. We deleted your request."
+    message.title = "Regarding " + str(room)
+    message.save()
     room.delete()
     return redirect("roomFinder_app:unapproved_rooms")
+
+def delete_message(request, pk):
+    message = get_object_or_404(Message, pk=pk)
+    message.delete()
+    return redirect("roomFinder_app:message_list")
+
+class MessageListView(generic.ListView):
+    template_name = "message_list.html"
+    context_object_name = "message_list"
+
+    def get_queryset(self):
+        user = self.request.user
+        return Message.objects.filter(user=user).order_by('-pk')
+
+class MessageDetailView(generic.DetailView):
+    model = Message
+    template_name = "message_detail.html"
+
+    def get_queryset(self):
+        return Message.objects.all()
 
 class RoomDetailView(generic.DetailView):
     model = Room
@@ -106,7 +133,14 @@ def add_room(request):
         room.room_name = room_name
         room.building = building
         room.save()
+        room_req = RoomRequest()
+        current_user = request.user
+        user_object = User.objects.all().get(username=current_user)
+        room_req.user = user_object
+        room_req.room = room
+        room_req.save()
         messages.info(request, "Room submitted")
+
         return HttpResponseRedirect(reverse('roomFinder_app:add_new_room'))
     else:
         return HttpResponse('Access Denied')
