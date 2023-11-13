@@ -7,7 +7,7 @@ from django.views import generic
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Room, Reservation
-from .forms import ReservationForm
+from .forms import ReservationForm, RoomForm
 from django.views.generic import CreateView
 from django.core.exceptions import ObjectDoesNotExist
 # from separate import room_generate
@@ -40,7 +40,7 @@ def import_data():
         print("Create a Dummy User")
 
 def room_list(request, building_value):
-    objects = Room.objects.filter(building=building_value)
+    objects = Room.objects.filter(building=building_value, approved=True)
     return render(request, 'room_list.html', {'objects': objects, 'building_value': building_value})
 
 class IndexView(generic.ListView):
@@ -53,10 +53,24 @@ class IndexView(generic.ListView):
         seen = set()
         uniqueBuildings = []
         for room in Room.objects.all().order_by('building'):
-            if room.building not in seen:
+            if room.building not in seen and room.approved == True:
                 seen.add(room.building)
                 uniqueBuildings.append(room.building)
         return uniqueBuildings
+
+
+class UnapprovedRoomsList(generic.ListView):
+    template_name = "unapproved_rooms.html"
+    context_object_name = "unapproved_rooms_list"
+
+    def get_queryset(self):
+        return Room.objects.filter(approved=False)
+
+def approve_room(request, pk):
+    obj = get_object_or_404(Room, pk=pk)
+    obj.approved = True;
+    obj.save()
+    return redirect("roomFinder_app:unapproved_rooms")
 
 
 class RoomDetailView(generic.DetailView):
@@ -74,13 +88,26 @@ class RoomListView(generic.ListView):
     def get_queryset(self):
         return Room.objects.all()
 
-# class ReservationCreate(generic.ListView):
-#     template_name = 'create_reservation.html'
-# 
-#     def get_queryset(self):
-#         return Reservation.objects.all()
-# 
-#     #@login_required(login_url='/user')
+def add_room(request):
+    if request.method == "POST":
+        building = request.POST['building']
+        room_name = request.POST['room_name']
+        if building == "" or room_name == "":
+            messages.warning(request, "Please enter all information")
+            return HttpResponseRedirect(reverse('roomFinder_app:add_new_room'))
+        if Room.objects.filter(room_name=room_name, building=building).exists():
+            messages.warning(request, "This room already exists")
+            return HttpResponseRedirect(reverse('roomFinder_app:add_new_room'))
+        room = Room()
+        room.room_name = room_name
+        room.building = building
+        room.save()
+        messages.info(request, "Room submitted")
+        return HttpResponseRedirect(reverse('roomFinder_app:add_new_room'))
+    else:
+        return HttpResponse('Access Denied')
+
+
 
 def make_reservation(request):
     if request.method == "POST":
@@ -142,6 +169,9 @@ class CreateResView(CreateView):
     form_class = ReservationForm
     template_name = "create_reservation.html"
 
+class AddRoomView(CreateView):
+    form_class = RoomForm
+    template_name = "add_new_room.html"
 
 class ReservationDetailView(generic.DetailView):
     model = Reservation

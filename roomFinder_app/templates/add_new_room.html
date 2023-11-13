@@ -1,0 +1,44 @@
+{% include 'sidebar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+</head>
+<body>
+    <div class="content">
+        <h1>Add a Room</h1>
+        <hr>
+        <form action="{% url 'roomFinder_app:add_room' %}" method="post">
+            {% csrf_token %}
+            {% for msg in messages %}
+                {% if msg.tags == 'warning' %}
+                    <div class="alert alert-warning alert-dismissile" role="alert">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        {{ msg }}</div>
+                {% endif %}
+                {% if msg.tags == 'info' %}
+                    <div class="alert alert-success alert-dismissile" role="alert">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        {{ msg }}</div>
+                {% endif %}
+            {% endfor %}
+            <fieldset style="margin-top:50px">
+                <div class="form-group">
+                    <label for="room_name" class="form-label">Room Number: </label>
+                    <input type="text" id="room_name" name="room_name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="building" class="form-label">Building: </label>
+                    <input type="text" id="building" name="building" class="form-control">
+                </div>
+            </fieldset>
+            <input type="submit" class="btn btn-outline-primary mt-3" value="Submit">
+            <a href="{% url 'roomFinder_app:index'%}" class="btn btn-outline-primary">Back to Home</a>
+        </form>
+    </div>
+</body>
+</html>

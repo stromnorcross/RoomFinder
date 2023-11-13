@@ -49,7 +49,7 @@
             {% if building_list %}
                 <ul>
                    {% for building_value in building_list %}
-                      <li><a href="{% url 'roomFinder_app:room_list' building_value %}">{{ building_value }}</a></li>
+                        <li><a href="{% url 'roomFinder_app:room_list' building_value %}">{{ building_value }}</a></li>
                    {% endfor %}
                 </ul>
             {% else %}
@@ -70,6 +70,7 @@
         ({key: "AIzaSyD3KKFuePsefgmgXPsYzqD2SFydD_rlUIM", v: "weekly"});</script>
           </div>
         </div>
+        <a href="{% url 'roomFinder_app:add_new_room' %}">Don't see a room you want? Click here to request to add a new room</a>
       </div>
     {% endblock user-content %}
     {% endif %}
