@@ -78,7 +78,7 @@ def delete_room(request, pk):
     to_user = room_req.user
     message = Message()
     message.user = to_user
-    message.message = str(room) + " does not exist in real life. We deleted your request."
+    message.message = str(room) + " does not exist at UVA. We deleted your request."
     message.title = "Regarding " + str(room)
     message.save()
     room.delete()
