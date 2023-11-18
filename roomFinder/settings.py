@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-m#wa8k2^)fn%f%a_jzy6ifpo486v3jp#nogs@fc0asqxqk0ewz"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['room-finder1-70d4c0df9a64.herokuapp.com', 'localhost', '127.0.0.1']
 
