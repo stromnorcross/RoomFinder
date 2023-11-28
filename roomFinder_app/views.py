@@ -46,7 +46,7 @@ def room_list(request, building_value):
 class IndexView(generic.ListView):
     template_name = "index.html"
     context_object_name = "building_list"
-    if Reservation.objects.count() < 6756:
+    if Reservation.objects.count() < 6714:
         import_data()
 
     def get_queryset(self):
