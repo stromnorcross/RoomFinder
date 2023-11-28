@@ -1,10 +1,13 @@
+{% include 'sidebar.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
 </head>
 <body>
-    <h1>Room: {{ room.room_name }}</h1>
-    <p>Location: {{ room.building }}</p>
-    <a href="{% url 'roomFinder_app:index'%}">Back to Home</a>
+    <div class="content">
+        <h1>Room: {{ room.room_name }}</h1>
+        <hr>
+        <p>Location: {{ room.building }}</p>
+    </div>
 </body>
 </html>

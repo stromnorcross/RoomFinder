@@ -13,3 +13,4 @@ django-allauth
 dj-database-url
 psycopg2
 pandas
+django-bootstrap-v5

@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.db import IntegrityError
 from django.views import generic
 from django.contrib.auth.models import User
+from django.contrib import messages
 from .models import Room, Reservation
 from .forms import ReservationForm
 from django.views.generic import CreateView
@@ -38,22 +39,41 @@ def import_data():
     except IntegrityError:
         print("Create a Dummy User")
 
+def room_list(request, building_value):
+    objects = Room.objects.filter(building=building_value)
+    return render(request, 'room_list.html', {'objects': objects, 'building_value': building_value})
+
 class IndexView(generic.ListView):
     template_name = "index.html"
-    context_object_name = "room_list"
+    context_object_name = "building_list"
     if Reservation.objects.count() < 6756:
         import_data()
 
     def get_queryset(self):
-        return Room.objects.all()
-    
+        seen = set()
+        uniqueBuildings = []
+        for room in Room.objects.all().order_by('building'):
+            if room.building not in seen:
+                seen.add(room.building)
+                uniqueBuildings.append(room.building)
+        return uniqueBuildings
+
+
 class RoomDetailView(generic.DetailView):
     model = Room
     template_name = "room_detail.html"
     
     def get_queryset(self):
         return Room.objects.all()
-    
+
+
+class RoomListView(generic.ListView):
+    template_name = "room_list.html"
+    context_object_name = "room_list"
+
+    def get_queryset(self):
+        return Room.objects.all()
+
 # class ReservationCreate(generic.ListView):
 #     template_name = 'create_reservation.html'
 # 
@@ -64,39 +84,50 @@ class RoomDetailView(generic.DetailView):
 
 def make_reservation(request):
     if request.method == "POST":
-        # change room_id for POST to be expected request
-        room_name = request.POST['room_name']
-        room = Room.objects.all().get(room_name=room_name)
-        # for reservation in Reservation.objects.all().filter(room=room):
-        # # only allow booking if the requested start time is after the reservation end time
-        # # or requested end time is before reservation start time, need to check hotel reservation logic for if-elif
-        #     if str(reservation.start_time) > request.POST['start_time'] and str(reservation.start_time) > request.POST['end_time']:
-        #     # pass is a keyword that does nothing, kinda like break but instead it just lets the loop keep running to check
-        #     # the requested start and end times with other reservations
-        #         pass
-        #     elif str(reservation.end_time) < request.POST['start_time'] and str(reservation.end_time) < request.POST['end_time']:
-        #         pass
-        #     else:
-        #         #messages.warning(request, "Invalid Booking Time")
-        #         #return redirect("homepage")
+        try:
+            if request.POST['title'] == "":
+                messages.warning(request, "Please enter a title.")
+                return HttpResponseRedirect(reverse('roomFinder_app:create_reservation'))
+            building = request.POST['building']
+            room_name = request.POST['room_name']
+            room = Room.objects.all().get(room_name=room_name, building=building)
+            input_start_time = datetime.time(datetime.strptime(request.POST['start_time'], '%H:%M'))
+            input_end_time = datetime.time(datetime.strptime(request.POST['end_time'], '%H:%M'))
+            for reservation in Reservation.objects.all().filter(room=room):
+                if not(reservation.day == request.POST['day']):
+                    pass
+                else:
+                    if reservation.start_time > input_start_time and reservation.start_time >= input_end_time > input_start_time:
+                        pass
+                    elif reservation.end_time <= input_start_time < input_end_time and reservation.end_time < input_end_time:
+                        pass
+                    else:
+                        messages.warning(request, "Invalid Booking Time: A Reservation Exists For This Time")
+                        return HttpResponseRedirect(reverse('roomFinder_app:create_reservation'))
 
-        current_user = request.user
-        #booking_id = str(room_id) + str(datetime.datetime.now())
-        reservation = Reservation()
-        room_object = Room.objects.all().get(room_name=room_name)
-        print(room_object)
-        user_object = User.objects.all().get(username=current_user)
-        print(user_object)
-        reservation.user = user_object
-        reservation.room = room_object
-        reservation.title = request.POST['title']
-        reservation.start_time = request.POST['start_time']
-        reservation.end_time = request.POST['end_time']
+            current_user = request.user
+            reservation = Reservation()
+            room_object = Room.objects.all().get(room_name=room_name, building=building)
+            print(room_object)
+            user_object = User.objects.all().get(username=current_user)
+            print(user_object)
+            reservation.user = user_object
+            reservation.room = room_object
+            reservation.title = request.POST['title']
+            reservation.start_time = request.POST['start_time']
+            reservation.end_time = request.POST['end_time']
+            reservation.day = request.POST['day']
+            reservation.save()
+            reservation_pk = reservation.pk
+            reservation_detail_url = reverse('roomFinder_app:reservation_detail', args=[reservation_pk])
+            return HttpResponseRedirect(reservation_detail_url)
+        except ValueError:
+            messages.warning(request, "Please enter a time")
+            return HttpResponseRedirect(reverse('roomFinder_app:create_reservation'))
+        except Room.DoesNotExist:
+            messages.warning(request, "This room does not exist. Please pick a room that exists")
+            return HttpResponseRedirect(reverse('roomFinder_app:create_reservation'))
 
-        reservation.save()
-        print(reservation)
-
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
     else:
         return HttpResponse('Access Denied')
 
@@ -127,9 +158,14 @@ class ReservationListView(generic.ListView):
 
     def get_queryset(self):
         user = self.request.user
+        class_user = User.objects.get(username='class time')
         group_name = "admin"
         if user.groups.filter(name=group_name).exists():
-            return Reservation.objects.all()
+            reservations = []
+            for reservation in Reservation.objects.all():
+                if reservation.user != class_user:
+                    reservations.append(reservation)
+            return reservations
         else:
             return Reservation.objects.filter(user=user)
 
