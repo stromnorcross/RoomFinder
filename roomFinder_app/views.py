@@ -6,8 +6,8 @@ from django.db import IntegrityError
 from django.views import generic
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import Room, Reservation
-from .forms import ReservationForm
+from .models import Room, Reservation, Message, RoomRequest
+from .forms import ReservationForm, RoomForm
 from django.views.generic import CreateView
 from django.core.exceptions import ObjectDoesNotExist
 # from separate import room_generate
@@ -40,7 +40,7 @@ def import_data():
         print("Create a Dummy User")
 
 def room_list(request, building_value):
-    objects = Room.objects.filter(building=building_value)
+    objects = Room.objects.all().filter(building=building_value, approved=True)
     return render(request, 'room_list.html', {'objects': objects, 'building_value': building_value})
 
 class IndexView(generic.ListView):
@@ -53,11 +53,56 @@ class IndexView(generic.ListView):
         seen = set()
         uniqueBuildings = []
         for room in Room.objects.all().order_by('building'):
-            if room.building not in seen:
+            if room.building not in seen and room.approved == True:
                 seen.add(room.building)
                 uniqueBuildings.append(room.building)
         return uniqueBuildings
 
+
+class UnapprovedRoomsList(generic.ListView):
+    template_name = "unapproved_rooms.html"
+    context_object_name = "unapproved_rooms_list"
+
+    def get_queryset(self):
+        return Room.objects.filter(approved=False)
+
+def approve_room(request, pk):
+    room = get_object_or_404(Room, pk=pk)
+    room.approved = True;
+    room.save()
+    return redirect("roomFinder_app:unapproved_rooms")
+
+def delete_room(request, pk):
+    room = get_object_or_404(Room, pk=pk)
+    room_req = RoomRequest.objects.filter(room=room).get()
+    to_user = room_req.user
+    message = Message()
+    message.user = to_user
+    message.message = str(room) + " does not exist at UVA. We deleted your request."
+    message.title = "Regarding " + str(room)
+    message.save()
+    room.delete()
+    return redirect("roomFinder_app:unapproved_rooms")
+
+def delete_message(request, pk):
+    message = get_object_or_404(Message, pk=pk)
+    message.delete()
+    return redirect("roomFinder_app:message_list")
+
+class MessageListView(generic.ListView):
+    template_name = "message_list.html"
+    context_object_name = "message_list"
+
+    def get_queryset(self):
+        user = self.request.user
+        return Message.objects.filter(user=user).order_by('-pk')
+
+class MessageDetailView(generic.DetailView):
+    model = Message
+    template_name = "message_detail.html"
+
+    def get_queryset(self):
+        return Message.objects.all()
 
 class RoomDetailView(generic.DetailView):
     model = Room
@@ -74,13 +119,33 @@ class RoomListView(generic.ListView):
     def get_queryset(self):
         return Room.objects.all()
 
-# class ReservationCreate(generic.ListView):
-#     template_name = 'create_reservation.html'
-# 
-#     def get_queryset(self):
-#         return Reservation.objects.all()
-# 
-#     #@login_required(login_url='/user')
+def add_room(request):
+    if request.method == "POST":
+        building = request.POST['building']
+        room_name = request.POST['room_name']
+        if building == "" or room_name == "":
+            messages.warning(request, "Please enter all information")
+            return HttpResponseRedirect(reverse('roomFinder_app:add_new_room'))
+        if Room.objects.filter(room_name=room_name, building=building).exists():
+            messages.warning(request, "This room already exists")
+            return HttpResponseRedirect(reverse('roomFinder_app:add_new_room'))
+        room = Room()
+        room.room_name = room_name
+        room.building = building
+        room.save()
+        room_req = RoomRequest()
+        current_user = request.user
+        user_object = User.objects.all().get(username=current_user)
+        room_req.user = user_object
+        room_req.room = room
+        room_req.save()
+        messages.info(request, "Room submitted")
+
+        return HttpResponseRedirect(reverse('roomFinder_app:add_new_room'))
+    else:
+        return HttpResponse('Access Denied')
+
+
 
 def make_reservation(request):
     if request.method == "POST":
@@ -142,6 +207,9 @@ class CreateResView(CreateView):
     form_class = ReservationForm
     template_name = "create_reservation.html"
 
+class AddRoomView(CreateView):
+    form_class = RoomForm
+    template_name = "add_new_room.html"
 
 class ReservationDetailView(generic.DetailView):
     model = Reservation

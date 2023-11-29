@@ -8,13 +8,14 @@ from django.contrib.auth.models import Permission
 
 
 # Create your models here.
+
 class Room(models.Model):
     room_name = models.CharField(max_length=100)
     building = models.CharField(max_length=100)
+    approved = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.room_name) + " " + self.building
-    
 
 class Reservation(models.Model):
     title = models.CharField(max_length=100)
@@ -32,5 +33,15 @@ class Reservation(models.Model):
     def __str__(self):
         return self.title + ": " + str(self.user) + " - " + str(self.room)
 
+class Message(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    message = models.CharField(max_length=200)
 
+    def __str__(self):
+        return str(self.title)
+
+class RoomRequest(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
 
