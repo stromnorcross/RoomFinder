@@ -1,43 +1,40 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'roomFinder_app/style.css' %}" />
 </head>
 <body>
 {% load socialaccount %}
 <div class="login container">
     <div class="w-full text-center mb-3">
-        <p>If you have not created an account yet, then please
+        <p style="margin-top: 10px;">If you have not created an account yet, then please
             <a class="text-blue-600" href="{{ signup_url }}">sign up</a> first.
         </p>
     </div>
-    <div class="w-[50%] m-auto border  rounded-lg">
-        <h1 class=" text-center bg-gray-100 h-[52px] "> <span class="font-bold text-3xl ">Welcome
-                Back</span>
-        </h1>
+    <div class="border rounded-lg">
+        <h1 class="text-center">Sign In</h1>
 
         <form action="{% url 'account_login' %}" method="POST" class="my-auto">
             <div class="justify-center mx-3">
                 {% csrf_token %}
                 <div class="w-full border my-3 rounded-lg ">
-                    {{form.login}}
+                    {{ form.login }}
                 </div>
 
                 <div class="w-full border my-3 rounded-lg">
-
                     {{form.password}}
                 </div>
-
-                <div>
-                    {{form.remember}}
-                    <label for="remember" class="">Remember Me</label>
-                </div>
-
-
             </div>
             <div class="justify-center mx-3">
-                <button class="primaryAction bg-blue-700 text-white rounded-lg w-[100%] my-3 p-2" type="submit">
+                <button class="btn btn-primary w-full" type="submit">
                     Sign In
                 </button>
             </div>
@@ -45,12 +42,22 @@
         </form>
         <div class="justify-center mx-3">
             <a href="{% provider_login_url 'google' %}">
-                <button class=" bg-red-200 my-3 rounded-lg w-[100%] p-2">
-                    Sign in with google <i class="fa-brands fa-google text-[#e0400b]"></i>
-                </button>
+                <button class="my-3 btn btn-primary w-full">Sign in with Google</button>
             </a>
         </div>
     </div>
 </div>
+<style>
+  #id_login,
+  #id_password{
+    width: 100%;
+    height: 40px;
+    border-radius: 6px;
+    outline: none;
+    padding: 0 12px 0 12px;
+    font-size: medium;
+
+  }
+</style>
 </body>
 </html>
