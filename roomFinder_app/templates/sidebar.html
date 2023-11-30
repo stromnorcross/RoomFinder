@@ -62,7 +62,7 @@
     {% else %}
       <div class="login-container">
         <h1 class="logged-out">RoomFinder</h1>
-        <a class="logged-out btn btn-primary" href="{% provider_login_url 'google' %}">Login with Google</a>
+        <a class="logged-out btn btn-primary" href="{% url 'account_login' %}">Sign In</a>
       </div>
     {% endif %}
 
