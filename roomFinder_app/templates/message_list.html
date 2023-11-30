@@ -1,0 +1,23 @@
+{% include 'sidebar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="content">
+    <h1>Your Messages</h1>
+    <hr>
+    {% if message_list %}
+        <ul>
+           {% for message in message_list %}
+                <li><a href="{% url 'roomFinder_app:message_detail' message.id %}">{{ message }}</a></li>
+           {% endfor %}
+        </ul>
+    {% else %}
+        <p>No messages</p>
+    {% endif %}
+</div>
+</body>
+</html>
