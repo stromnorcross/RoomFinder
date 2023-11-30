@@ -66,10 +66,6 @@ body {
     display:block;
 }
 
-h1 {
-    padding:25px 8px 6px 8px;
-}
-
 .login-container {
     display: flex;
     flex-direction: column;
@@ -78,10 +74,15 @@ h1 {
     height: 100vh;
 }
 
-.back {
-    margin-bottom: 20px;
+h1 {
+    padding:25px 8px 6px 8px;
+    font-size: 40px;
 }
 
 .back {
     margin-bottom: 20px;
+}
+
+.w-full {
+    width: 100%;
 }
