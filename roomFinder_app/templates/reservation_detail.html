@@ -14,8 +14,8 @@
         <p>End Time: {{ reservation.end_time }}</p>
         {% if request.user|has_group:"admin" %}
             <p>User: {{ reservation.user }}</p>
-            <a href="{% url 'roomFinder_app:delete_reservation' reservation.id %}" class="btn btn-outline-primary">Delete</a>
         {% endif %}
+        <a href="{% url 'roomFinder_app:delete_reservation' reservation.id %}" class="btn btn-outline-primary">Delete</a>
         <a href="{% url 'roomFinder_app:reservation_list'%}" class="btn btn-outline-primary">Back to Reservations</a>
     </div>
 </form>
