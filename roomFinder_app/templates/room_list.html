@@ -7,6 +7,7 @@
     <div class="content">
         <h1>{{ building_value }}</h1>
         <hr>
+        <gmp-map center="38.0336, -78.5080" zoom="16" map-id="aca56ed0ca45d249" style="width: 700px; height: 400px;"></gmp-map>
             <ul>
                 {% for obj in objects %}
                     <li><a href="{% url 'roomFinder_app:room_detail' obj.id %}">{{ obj.room_name }}</a></li>
