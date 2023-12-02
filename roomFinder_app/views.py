@@ -39,9 +39,32 @@ def import_data():
     except IntegrityError:
         print("Create a Dummy User")
 
+building_coordinates = {'Astronomy Bldg': "38.035568, -78.515187", 'Biomed Engr & Med Sci': "38.030433, -78.499735", 'Bond House': "38.0293, -78.5041", 
+                        'Brooks Hall': "38.035750, 78.502092", 'Brown Hall': "38.052923, -78.509306", 'Bryan Hall': "38.033263, -78.505940",
+                        'Campbell Hall': "38.038724, -78.503845", 'Chemical Engineering Bldg': "38.033410, -78.510739", 'Chemistry Bldg': "38.033539, -78.511657",
+                        'Clark Hall': "38.032998, -78.507857", 'Claude Moore Nursing Educ': "38.030769, -78.501686", 'Clemons Library': "38.036417, -78.506061",
+                        'Cocke Hall': "38.033400,, -78.505220", 'Collins Wing': "38.033348, -78.501611", 'Darden Classroom Bldg Room': "38.052551,-78.514637",
+                        "Dawson's Row": "38.032250,-78.506411", 'Dell': "38.034913,-78.509954", 'Drama Education Bldg': "38.039623,-78.504383",
+                        'Fayerweather Hall': "38.037815,-78.503079", 'French House': "38.031654,-78.502109", 'Gibson Hall': "38.031342,-78.505156",
+                        'Gilmer Hall': "38.034132,-78.512746", 'Hunter Smith Band Building': "38.039856,-78.502925", 'Jesser Hall': "38.033120,-78.510882",
+                        'John W. Warner Hall': "38.033378,-78.506791", 'Kerchof Hall': "38.032286,-78.508183", 'Lacy Room': "38.035640,-78.517774",
+                        'Legal Aid Justice Center': "38.039149,-78.491610", 'Lower West Oval Room': "38.035704,-78.503531", 'Martha Jefferson Hospital CRN': "38.022735,-78.444283",
+                        'McLeod Hall': "38.030881,-78.501646", 'Mechanical Engr Bldg': "38.032601,-78.511036", 'Memorial Gymnasium': "38.037373,-78.507181",
+                        'Minor Hall': "38.033828,-78.506503", 'Monroe Hall': "38.034892,-78.506160", 'Multistory (Old) Hospital': "38.033270,-78.501137",
+                        'Nau Hall': "38.031695,-78.504926", 'New Cabell Hall': "38.032540,-78.505108", 'Observ Mtn Eng Res Fac G': "38.041211,-78.521048",
+                        'Old Cabell Hall': "38.032835,-78.504867", 'Olsson Hall': "38.031966,-78.510484", 'Pavilion V': "38.034970,-78.504193",
+                        'Pavilion VIII': "38.034372,-78.503607", 'Physical & Life Sci Bldg Rm': "38.032850,-78.512241", 'Physics Bldg': "38.034252,-78.510244",
+                        'PINN Hall': "38.031832,-78.500508", 'Randall Hall': "38.033251,-78.503314", 'Rice Hall': "38.031581,-78.510751",
+                        'Ridley Hall': "38.034917,-78.509096", 'Robertson Hall': "38.032988,-78.503943", 'Rouss Hall': "38.032988,-78.503943",
+                        'Ruffin Hall': "38.039320,-78.503173", 'Sands Captl Mgmt Bldg Rm': "38.052720,-78.514398", 'Shannon House': "38.033578,-78.514953",
+                        'Slaughter Hall': "38.053259,-78.510573", 'Slaughter Rec': "38.034804,-78.517928", 'Student Health & Wellness': "38.030207,-78.503798",
+                        'The Rotunda Room': "38.035594,-78.503352", 'Thornton Hall A': "38.033243,-78.509708", 'Thornton Hall D': "38.032905,-78.510245",
+                        'Thornton Hall E': "38.032364,-78.510438", 'University Health Sciences': "38.031594,-78.500793", 'Wilsdorf Hall': "38.033303,-78.511243",
+                        'Wilson Hall': "38.032455,-78.504022"} 
+
 def room_list(request, building_value):
     objects = Room.objects.all().filter(building=building_value, approved=True)
-    return render(request, 'room_list.html', {'objects': objects, 'building_value': building_value})
+    return render(request, 'room_list.html', {'objects': objects, 'building_value': building_value, 'building_coord': building_coordinates})
 
 class IndexView(generic.ListView):
     template_name = "index.html"

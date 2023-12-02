@@ -7,3 +7,8 @@ register = template.Library()
 def has_group(user, group_name): 
     group = Group.objects.get(name=group_name) 
     return True if group in user.groups.all() else False
+
+@register.filter('get_value_from_dict')
+def get_value_from_dict(dict_data, key):
+    if key:
+        return dict_data.get(key)
