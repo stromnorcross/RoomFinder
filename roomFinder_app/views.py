@@ -203,9 +203,19 @@ def admin_delete_reservation(request, pk):
     return redirect("roomFinder_app:reservation_list")
 
 
-class CreateResView(CreateView):
-    form_class = ReservationForm
+class CreateResView(generic.ListView):
+    #form_class = ReservationForm
     template_name = "create_reservation.html"
+    context_object_name = "building_list"
+
+    def get_queryset(self):
+        seen = set()
+        uniqueBuildings = []
+        for room in Room.objects.all().order_by('building'):
+            if room.building not in seen and room.approved == True:
+                seen.add(room.building)
+                uniqueBuildings.append(room.building)
+        return uniqueBuildings
 
 class AddRoomView(CreateView):
     form_class = RoomForm
@@ -230,12 +240,12 @@ class ReservationListView(generic.ListView):
         group_name = "admin"
         if user.groups.filter(name=group_name).exists():
             reservations = []
-            for reservation in Reservation.objects.all():
+            for reservation in Reservation.objects.all().order_by("-created_at"):
                 if reservation.user != class_user:
                     reservations.append(reservation)
             return reservations
         else:
-            return Reservation.objects.filter(user=user)
+            return Reservation.objects.filter(user=user).order_by("-created_at")
 
 
 """
