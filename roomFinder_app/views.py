@@ -123,7 +123,7 @@ def add_room(request):
     if request.method == "POST":
         building = request.POST['building']
         room_name = request.POST['room_name']
-        if building == "" or room_name == "":
+        if building == "" or room_name == ""  or building.isspace() or room_name.isspace():
             messages.warning(request, "Please enter all information")
             return HttpResponseRedirect(reverse('roomFinder_app:add_new_room'))
         if Room.objects.filter(room_name=room_name, building=building).exists():
@@ -150,7 +150,7 @@ def add_room(request):
 def make_reservation(request):
     if request.method == "POST":
         try:
-            if request.POST['title'] == "":
+            if request.POST['title'] == "" or request.POST['title'].isspace():
                 messages.warning(request, "Please enter a title.")
                 return HttpResponseRedirect(reverse('roomFinder_app:create_reservation'))
             building = request.POST['building']
