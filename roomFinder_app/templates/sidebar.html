@@ -6,6 +6,7 @@
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
+    <title>RoomFinder</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -31,12 +32,10 @@
         <h3><u>Admin</u></h3>
         <a href="{% url 'roomFinder_app:reservation_list'%}">All Reservations</a>
         <a href="{% url 'roomFinder_app:unapproved_rooms'%}">Approve Rooms</a>
-        <!-- <a href="#">Settings</a> -->
         <!-- User Pages -->
         <h3><u>User</u></h3>
         <a href="{% url 'roomFinder_app:create_reservation'%}">Book a Room</a>
         <a href="{% url 'roomFinder_app:add_new_room'%}">Add a Room</a>
-        <!-- <a href="{% url 'roomFinder_app:reservation_list'%}">Past Reservations</a> -->
 
         <a class="btn btn-secondary" href="{% url 'account_logout' %}"  role="button">Sign out</a>
       </div>
@@ -53,8 +52,6 @@
         <a href="{% url 'roomFinder_app:reservation_list'%}">Current Reservations</a>
         <a href="{% url 'roomFinder_app:add_new_room'%}">Add a Room</a>
         <a href="{% url 'roomFinder_app:message_list'%}">Messages</a>
-        <!-- <a href="{% url 'roomFinder_app:reservation_list'%}">Past Reservations</a>
-        <a href="#">Settings</a> -->
         <a class="btn btn-secondary" href="{% url 'account_logout' %}"  role="button">Sign out</a>
       </div>
       <!-- User Content -->

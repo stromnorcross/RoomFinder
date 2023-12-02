@@ -1,14 +1,20 @@
 /*
- * Always set the map height explicitly to define the size of the div element
- * that contains the map.
- */
+
+REFERENCES
+
+Title: Adding a Sidebar
+Author: Tim Ruscica
+Date: N/A
+Code version: N/A
+URL: https://www.techwithtim.net/tutorials/django/adding-a-sidebar
+Software License: N/A
+
+*/
+
 #map {
   height: 100%;
 }
 
-/*
- * Optional: Makes the sample page fill the window.
- */
 html,
 body {
   height: 100%;
@@ -27,20 +33,22 @@ body {
     z-index:1;
     top:0;
     left:0;
-    background-color:#111;
+    background-color:#151515;
     overflow-x: hidden;
     padding-top:20px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
 }
+
 .sidenav a {
     padding:6px 8px 6px 16px;
     text-decoration: none;
     font-size:20px;
-    color: #818181;
+    color: #808080;
     display:block;
 }
+
 .sidenav a:hover {
     color:#f1f1f1;
 }
