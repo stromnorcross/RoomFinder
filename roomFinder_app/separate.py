@@ -5,6 +5,13 @@ import requests
 from datetime import timedelta,datetime
 import re
 import csv
+# *  REFERENCES
+# *  ----------
+# *  Title: Project SIS API
+# *  Author: Mark Sherriff/Tom Horton
+# *  Date: 2023
+# *  URL: https://s23.cs3240.org/sis-api.html
+# *  used to make sis api calls with term specific links and paginate for all valid indices
 
 def room_generate():
     url = "https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term="
