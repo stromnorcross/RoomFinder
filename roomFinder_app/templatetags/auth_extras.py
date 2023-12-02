@@ -1,6 +1,13 @@
 from django import template
 from django.contrib.auth.models import Group 
 
+# * REFERENCES
+# * Title: sw-django-utils, get_value_from_dict
+# * Author: Sergey Telminov
+# * Date: May 6, 2016
+# * URL: https://github.com/telminov/sw-django-utils/blob/master/djutils/templatetags/djutils.py
+# * Software License: N/A
+
 register = template.Library()
 
 @register.filter(name='has_group')
