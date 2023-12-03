@@ -40,7 +40,7 @@ def import_data():
         print("Create a Dummy User")
 
 building_coordinates = {'Astronomy Bldg': "38.035568, -78.515187", 'Biomed Engr & Med Sci': "38.030433, -78.499735", 'Bond House': "38.0293, -78.5041", 
-                        'Brooks Hall': "38.035750, 78.502092", 'Brown Hall': "38.052923, -78.509306", 'Bryan Hall': "38.033263, -78.505940",
+                        'Brooks Hall': "38.035750, -78.502092", 'Brown Hall': "38.052923, -78.509306", 'Bryan Hall': "38.033263, -78.505940",
                         'Campbell Hall': "38.038724, -78.503845", 'Chemical Engineering Bldg': "38.033410, -78.510739", 'Chemistry Bldg': "38.033539, -78.511657",
                         'Clark Hall': "38.032998, -78.507857", 'Claude Moore Nursing Educ': "38.030769, -78.501686", 'Clemons Library': "38.036417, -78.506061",
                         'Cocke Hall': "38.033400,, -78.505220", 'Collins Wing': "38.033348, -78.501611", 'Darden Classroom Bldg Room': "38.052551,-78.514637",
