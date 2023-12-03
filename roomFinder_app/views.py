@@ -1,3 +1,13 @@
+# *  REFERENCES
+# *  ----------
+# *  Title: Hotel-Room-Booking-System
+# *  Author: SurajGuptaRavi
+# *  Date: 2020
+# *  URL: https://github.com/SurajGuptaRavi/Hotel-Room-Booking-System/blob/master/Krishna_Hotel/hotel/krishna/views.py
+# *  used book_room function (lines 244-283) as a starting point for
+# *  for our make_reservation function (lines 160-207)
+
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse, reverse_lazy
@@ -196,9 +206,9 @@ def make_reservation(request):
             current_user = request.user
             reservation = Reservation()
             room_object = Room.objects.all().get(room_name=room_name, building=building)
-            print(room_object)
+            #print(room_object)
             user_object = User.objects.all().get(username=current_user)
-            print(user_object)
+            #print(user_object)
             reservation.user = user_object
             reservation.room = room_object
             reservation.title = request.POST['title']

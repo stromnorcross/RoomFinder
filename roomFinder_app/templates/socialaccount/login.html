@@ -1,3 +1,18 @@
+<!--
+
+REFERENCES
+
+Title: Proper Way of Using Google Authentication with Django and Django-allauth Part 2
+Author: Samsonk
+Date: August 9
+Code version: N/A
+URL: https://python.plainenglish.io/proper-way-of-using-google-authentication-with-django-and-django-allauth-part-2-c47b87dd1283
+Repo: https://github.com/samson4/DJango_google_Auth/tree/master/templates/account
+Software License: N/A
+Usage: Used tutorial as a template to format a custom login page
+
+-->
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -11,12 +26,13 @@
     <link rel="stylesheet" href="{% static 'roomFinder_app/style.css' %}" />
 </head>
 <body>
+<h1 align="center" class="mb-5">RoomFinder</h1>
 <div class="login container">
 <div class="mt-3 border rounded-lg">
+    <input type=button class="back btn mx-3 my-3 btn-outline-primary" value="Back" onClick="javascript:history.go(-1);">
     <h1 class="text-center">Sign In</h1>
 
-    <h2 class="text-center my-3">You are about to use third party authentication!
-    </h2>
+    <h4 class="text-center my-3">Continue with Google authentication!</h4>
     <form method="post">
         <div class="justify-center mx-3">
             {% csrf_token %}

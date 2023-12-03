@@ -1,3 +1,18 @@
+<!--
+
+REFERENCES
+
+Title: Proper Way of Using Google Authentication with Django and Django-allauth Part 2
+Author: Samsonk
+Date: August 9
+Code version: N/A
+URL: https://python.plainenglish.io/proper-way-of-using-google-authentication-with-django-and-django-allauth-part-2-c47b87dd1283
+Repo: https://github.com/samson4/DJango_google_Auth/tree/master/templates/account
+Software License: N/A
+Usage: Used tutorial as a templateto format a custom sign up page
+
+-->
+
 {% load static %}
 {% load i18n %}
 <!DOCTYPE html>
@@ -12,6 +27,7 @@
     <link rel="stylesheet" href="{% static 'roomFinder_app/style.css' %}" />
 </head>
 <body>
+<h1 align="center" class="mb-5">RoomFinder</h1>
 <div class="login container">
 <div class="w-full text-center mb-3">
   <p style="margin-top: 10px;">Already have an account? Then please <a class="text-blue-600" href="{{ login_url }}">sign in</a>.</p>
@@ -27,6 +43,7 @@
     {% endfor %}
   {% endif %}
 <div class="border rounded-lg">
+    <input type=button class="back btn mx-3 mt-3 btn-outline-primary" value="Back" onClick="javascript:history.go(-1);">
   <h1 class="text-center">Create Your Account</h1>
 
   <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
