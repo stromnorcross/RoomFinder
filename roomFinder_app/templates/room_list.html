@@ -15,6 +15,10 @@
                 {% endfor %}
             </ul>
         <h1>Location</h1>
-        <gmp-map center="{{ building_coord|get_value_from_dict:building_value }}" zoom="18" map-id="aca56ed0ca45d249" style="width: 700px; height: 400px;"></gmp-map>
+        {% if building_value in building_coord %}
+            <gmp-map center="{{ building_coord|get_value_from_dict:building_value }}" zoom="18" map-id="aca56ed0ca45d249" style="width: 700px; height: 400px;"></gmp-map>
+        {% else %}
+            <gmp-map center="38.0336, -78.5080" zoom="16" map-id="aca56ed0ca45d249" style="width: 700px; height: 400px;"></gmp-map>
+        {% endif %}
     </div>
 </body>
