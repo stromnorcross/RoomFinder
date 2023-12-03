@@ -43,7 +43,7 @@ building_coordinates = {'Astronomy Bldg': "38.035568, -78.515187", 'Biomed Engr 
                         'Brooks Hall': "38.035750, -78.502092", 'Brown Hall': "38.052923, -78.509306", 'Bryan Hall': "38.033263, -78.505940",
                         'Campbell Hall': "38.038724, -78.503845", 'Chemical Engineering Bldg': "38.033410, -78.510739", 'Chemistry Bldg': "38.033539, -78.511657",
                         'Clark Hall': "38.032998, -78.507857", 'Claude Moore Nursing Educ': "38.030769, -78.501686", 'Clemons Library': "38.036417, -78.506061",
-                        'Cocke Hall': "38.033400,, -78.505220", 'Collins Wing': "38.033348, -78.501611", 'Darden Classroom Bldg Room': "38.052551,-78.514637",
+                        'Cocke Hall': "38.033400, -78.505220", 'Collins Wing': "38.033348, -78.501611", 'Darden Classroom Bldg Room': "38.052551,-78.514637",
                         "Dawson's Row": "38.032250,-78.506411", 'Dell': "38.034913,-78.509954", 'Drama Education Bldg': "38.039623,-78.504383",
                         'Fayerweather Hall': "38.037815,-78.503079", 'French House': "38.031654,-78.502109", 'Gibson Hall': "38.031342,-78.505156",
                         'Gilmer Hall': "38.034132,-78.512746", 'Hunter Smith Band Building': "38.039856,-78.502925", 'Jesser Hall': "38.033120,-78.510882",
